@@ -50,7 +50,7 @@ float poke_rotate = 0;
 
 void Initialize() {
     SDL_Init(SDL_INIT_VIDEO);
-    displayWindow = SDL_CreateWindow("2D Scene!", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 640, 480, SDL_WINDOW_OPENGL);
+    displayWindow = SDL_CreateWindow("Kuchipatchi and Eevee!", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 640, 480, SDL_WINDOW_OPENGL);
     SDL_GLContext context = SDL_GL_CreateContext(displayWindow);
     SDL_GL_MakeCurrent(displayWindow, context);
     
@@ -77,7 +77,7 @@ void Initialize() {
     
     glUseProgram(program.programID);
     
-    glClearColor(0.2f, 0.2f, 0.2f, 1.0f);
+    glClearColor(1.0f, 0.769f, 0.922f, 1.0f);
     glEnable(GL_BLEND);
     
     // Good setting for transparency
