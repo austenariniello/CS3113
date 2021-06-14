@@ -16,6 +16,7 @@
 
 SDL_Window* displayWindow;
 bool gameIsRunning = true;
+int spacePressCount = 0;
 
 ShaderProgram program;
 glm::mat4 viewMatrix, player1Matrix, player2Matrix, eggMatrix, projectionMatrix;
@@ -35,12 +36,66 @@ glm::vec3 player2_dimensions = glm::vec3(1, 1, 0);
 glm::vec3 egg_dimensions = glm::vec3(0.5, 0.5, 0);
 
 float player_speed = 2.0f;
+float egg_speed = 1.0f;
+int egg_direction;
 
 GLuint player1TextureID, player2TextureID, eggTextureID;
+
 bool HasCollided(glm::vec3 position1, glm::vec3 dimensions1, glm::vec3 position2, glm::vec3 dimensions2) {
     float xdist = fabs(position2.x - position1.x) - ((dimensions1.x + dimensions2.x) / 2.0f);
     float ydist = fabs(position2.x - position1.x) - ((dimensions1.x + dimensions2.x) / 2.0f);
     return (xdist < 0 && ydist < 0);
+}
+
+glm::vec3 EggPhysics(int direction) {
+    /*
+     Given an int 0-7, returns an egg movement vector corresponding to that direction
+     0 : East
+     1 : NorthEast
+     2 : North
+     3 : NorthWest
+     4 : West
+     5 : SouthWest
+     6 : South
+     7 : SouthEast
+    */
+    glm::vec3 movement;
+    switch(direction) {
+        case 0 :
+            movement.x = 1.0f;
+            break;
+        case 1 :
+            movement.x = 1.0f;
+            movement.y = 1.0f;
+            break;
+        case 2 :
+            movement.y = 1.0f;
+            break;
+        case 3 :
+            movement.x = -1.0f;
+            movement.y = 1.0f;
+            break;
+        case 4 :
+            movement.x = -1.0f;
+            break;
+        case 5 :
+            movement.x = -1.0f;
+            movement.y = -1.0f;
+            break;
+        case 6 :
+            movement.y = -1.0f;
+            break;
+        case 7 :
+            movement.x = 1.0f;
+            movement.y = -1.0f;
+            break;
+    }
+    
+    if (glm::length(movement) > 1.0f) {
+        movement = glm::normalize(movement);
+    }
+    
+    return movement;
 }
 
 GLuint LoadTexture(const char* filePath) {
@@ -85,7 +140,6 @@ void Initialize() {
     player2Matrix = glm::mat4(1.0f);
     eggMatrix = glm::mat4(1.0f);
     
-    eggMatrix = glm::scale(eggMatrix, glm::vec3(0.5f, 0.5f, 1.0f));
     projectionMatrix = glm::ortho(-5.0f, 5.0f, -3.75f, 3.75f, -1.0f, 1.0f);
     
     program.SetProjectionMatrix(projectionMatrix);
@@ -104,6 +158,7 @@ void Initialize() {
     eggTextureID = LoadTexture("egg.png");
 }
 
+
 void ProcessInput() {
     
     player1_movement = glm::vec3(0);
@@ -119,16 +174,12 @@ void ProcessInput() {
 
             case SDL_KEYDOWN:
                 switch (event.key.keysym.sym) {
-                    case SDLK_LEFT:
-                        // Move the player left
-                        break;
-
-                    case SDLK_RIGHT:
-                        // Move the player right
-                        break;
-
                     case SDLK_SPACE:
-                        // Some sort of action
+                        if (spacePressCount < 1) {
+                            egg_direction =(rand() % 8);
+                            egg_movement = EggPhysics(egg_direction);
+                        }
+                        spacePressCount++;
                         break;
             }
             break; // SDL_KEYDOWN
@@ -155,7 +206,6 @@ void ProcessInput() {
     
 }
 
-
 void Update() {
     float ticks = (float)SDL_GetTicks() / 1000.0f;
     float deltaTime = ticks - lastTicks;
@@ -180,6 +230,30 @@ void Update() {
     else if (player2_position.y < -3.25f) {
         player2_position.y = -3.25f;
     }
+
+    egg_position += egg_movement * egg_speed * deltaTime;
+    
+    if (egg_position.y > 3.5f) {
+        egg_position.y = 3.5f;
+        if ((egg_direction == 1) || (egg_direction == 2)) {
+            egg_direction = 7;
+        }
+        else if (egg_direction == 3)  {
+            egg_direction = 5;
+        }
+        egg_movement = EggPhysics(egg_direction);
+    }
+    
+    else if (egg_position.y < -3.5f) {
+        egg_position.y = -3.5f;
+        if ((egg_direction == 5) || (egg_direction == 6)) {
+            egg_direction = 3;
+        }
+        else if (egg_direction == 7)  {
+            egg_direction = 1;
+        }
+        egg_movement = EggPhysics(egg_direction);
+    }
     
     player1Matrix = glm::mat4(1.0f);
     player1Matrix = glm::translate(player1Matrix, player1_position);
@@ -187,6 +261,9 @@ void Update() {
     player2Matrix = glm::mat4(1.0f);
     player2Matrix = glm::translate(player2Matrix, player2_position);
     
+    eggMatrix = glm::mat4(1.0f);
+    eggMatrix = glm::translate(eggMatrix, egg_position);
+    eggMatrix = glm::scale(eggMatrix, glm::vec3(0.5f, 0.5f, 1.0f));
     
 }
 
