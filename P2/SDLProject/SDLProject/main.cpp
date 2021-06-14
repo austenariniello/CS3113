@@ -18,20 +18,30 @@ SDL_Window* displayWindow;
 bool gameIsRunning = true;
 
 ShaderProgram program;
-glm::mat4 viewMatrix, player1Matrix, player2Matrix, projectionMatrix;
+glm::mat4 viewMatrix, player1Matrix, player2Matrix, eggMatrix, projectionMatrix;
 
 // Start at 0, 0, 0
 glm::vec3 player1_position = glm::vec3(-4.5, 0, 0);
 glm::vec3 player2_position = glm::vec3(4.5, 0, 0);
+glm::vec3 egg_position = glm::vec3(0,0,0);
 
 // Don’t go anywhere (yet).
 glm::vec3 player1_movement = glm::vec3(0, 0, 0);
 glm::vec3 player2_movement = glm::vec3(0, 0, 0);
+glm::vec3 egg_movement = glm::vec3(0,0,0);
 
-float player_speed = 1.0f;
+glm::vec3 player1_dimensions = glm::vec3(1, 1, 0);
+glm::vec3 player2_dimensions = glm::vec3(1, 1, 0);
+glm::vec3 egg_dimensions = glm::vec3(0.5, 0.5, 0);
 
-GLuint player1TextureID;
-GLuint player2TextureID;
+float player_speed = 2.0f;
+
+GLuint player1TextureID, player2TextureID, eggTextureID;
+bool HasCollided(glm::vec3 position1, glm::vec3 dimensions1, glm::vec3 position2, glm::vec3 dimensions2) {
+    float xdist = fabs(position2.x - position1.x) - ((dimensions1.x + dimensions2.x) / 2.0f);
+    float ydist = fabs(position2.x - position1.x) - ((dimensions1.x + dimensions2.x) / 2.0f);
+    return (xdist < 0 && ydist < 0);
+}
 
 GLuint LoadTexture(const char* filePath) {
     int w, h, n;
@@ -58,7 +68,7 @@ float lastTicks = 0.0f;
 
 void Initialize() {
     SDL_Init(SDL_INIT_VIDEO);
-    displayWindow = SDL_CreateWindow("Lectures!", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 640, 480, SDL_WINDOW_OPENGL);
+    displayWindow = SDL_CreateWindow("Egg Toss!", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 640, 480, SDL_WINDOW_OPENGL);
     SDL_GLContext context = SDL_GL_CreateContext(displayWindow);
     SDL_GL_MakeCurrent(displayWindow, context);
     
@@ -73,7 +83,9 @@ void Initialize() {
     viewMatrix = glm::mat4(1.0f);
     player1Matrix = glm::mat4(1.0f);
     player2Matrix = glm::mat4(1.0f);
+    eggMatrix = glm::mat4(1.0f);
     
+    eggMatrix = glm::scale(eggMatrix, glm::vec3(0.5f, 0.5f, 1.0f));
     projectionMatrix = glm::ortho(-5.0f, 5.0f, -3.75f, 3.75f, -1.0f, 1.0f);
     
     program.SetProjectionMatrix(projectionMatrix);
@@ -87,14 +99,41 @@ void Initialize() {
     // Good setting for transparency
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     
-    player1TextureID = LoadTexture("pokemon.png");
-    player2TextureID = LoadTexture("tamagotchi.png");
+    player1TextureID = LoadTexture("mametchi.png");
+    player2TextureID = LoadTexture("memetchi.png");
+    eggTextureID = LoadTexture("egg.png");
 }
 
 void ProcessInput() {
     
     player1_movement = glm::vec3(0);
     player2_movement = glm::vec3(0);
+    
+    SDL_Event event;
+    while (SDL_PollEvent(&event)) {
+        switch (event.type) {
+            case SDL_QUIT:
+            case SDL_WINDOWEVENT_CLOSE:
+                gameIsRunning = false;
+                break;
+
+            case SDL_KEYDOWN:
+                switch (event.key.keysym.sym) {
+                    case SDLK_LEFT:
+                        // Move the player left
+                        break;
+
+                    case SDLK_RIGHT:
+                        // Move the player right
+                        break;
+
+                    case SDLK_SPACE:
+                        // Some sort of action
+                        break;
+            }
+            break; // SDL_KEYDOWN
+        }
+    }
     
     const Uint8 *keys = SDL_GetKeyboardState(NULL);
     
@@ -126,11 +165,29 @@ void Update() {
     player1_position += player1_movement * player_speed * deltaTime;
     player2_position += player2_movement * player_speed * deltaTime;
     
+    if (player1_position.y > 3.25f) {
+        player1_position.y = 3.25f;
+    }
+    
+    else if (player1_position.y < -3.25f) {
+        player1_position.y = -3.25f;
+    }
+    
+    if (player2_position.y > 3.25f) {
+        player2_position.y = 3.25f;
+    }
+    
+    else if (player2_position.y < -3.25f) {
+        player2_position.y = -3.25f;
+    }
+    
     player1Matrix = glm::mat4(1.0f);
     player1Matrix = glm::translate(player1Matrix, player1_position);
     
     player2Matrix = glm::mat4(1.0f);
     player2Matrix = glm::translate(player2Matrix, player2_position);
+    
+    
 }
 
 void Render() {
@@ -152,6 +209,10 @@ void Render() {
     
     program.SetModelMatrix(player2Matrix);
     glBindTexture(GL_TEXTURE_2D, player2TextureID);
+    glDrawArrays(GL_TRIANGLES, 0, 6);
+    
+    program.SetModelMatrix(eggMatrix);
+    glBindTexture(GL_TEXTURE_2D, eggTextureID);
     glDrawArrays(GL_TRIANGLES, 0, 6);
     
     glDisableVertexAttribArray(program.positionAttribute);

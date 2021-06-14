@@ -7,9 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		3F52ABB42674279300578069 /* ctg.png in CopyFiles */ = {isa = PBXBuildFile; fileRef = 3F52ABB32674277A00578069 /* ctg.png */; };
-		3F55011F26769A4800D9D03C /* pokemon.png in CopyFiles */ = {isa = PBXBuildFile; fileRef = 3F55011E26769A1C00D9D03C /* pokemon.png */; };
-		3F55012126769A4A00D9D03C /* tamagotchi.png in CopyFiles */ = {isa = PBXBuildFile; fileRef = 3F55011D26769A1C00D9D03C /* tamagotchi.png */; };
+		3F55012726769FB500D9D03C /* mametchi.png in CopyFiles */ = {isa = PBXBuildFile; fileRef = 3F55012426769FA500D9D03C /* mametchi.png */; };
+		3F55012926769FB800D9D03C /* memetchi.png in CopyFiles */ = {isa = PBXBuildFile; fileRef = 3F55012526769FA500D9D03C /* memetchi.png */; };
+		3F55012D2677CFEF00D9D03C /* egg.png in CopyFiles */ = {isa = PBXBuildFile; fileRef = 3F55012C2677CFEA00D9D03C /* egg.png */; };
 		DBDF1B532323DE3F007CECB1 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DBDF1B522323DE3F007CECB1 /* main.cpp */; };
 		DBDF1B5E2323DE8D007CECB1 /* ShaderProgram.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DBDF1B5D2323DE8D007CECB1 /* ShaderProgram.cpp */; };
 		DBDF1B612323DE9E007CECB1 /* shaders in CopyFiles */ = {isa = PBXBuildFile; fileRef = DBDF1B5C2323DE8D007CECB1 /* shaders */; };
@@ -28,18 +28,18 @@
 			dstSubfolderSpec = 6;
 			files = (
 				DBDF1B612323DE9E007CECB1 /* shaders in CopyFiles */,
-				3F52ABB42674279300578069 /* ctg.png in CopyFiles */,
-				3F55011F26769A4800D9D03C /* pokemon.png in CopyFiles */,
-				3F55012126769A4A00D9D03C /* tamagotchi.png in CopyFiles */,
+				3F55012926769FB800D9D03C /* memetchi.png in CopyFiles */,
+				3F55012726769FB500D9D03C /* mametchi.png in CopyFiles */,
+				3F55012D2677CFEF00D9D03C /* egg.png in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		3F52ABB32674277A00578069 /* ctg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ctg.png; sourceTree = "<group>"; };
-		3F55011D26769A1C00D9D03C /* tamagotchi.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = tamagotchi.png; path = ../../../P1/SDLProject/SDLProject/tamagotchi.png; sourceTree = "<group>"; };
-		3F55011E26769A1C00D9D03C /* pokemon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = pokemon.png; path = ../../../P1/SDLProject/SDLProject/pokemon.png; sourceTree = "<group>"; };
+		3F55012426769FA500D9D03C /* mametchi.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = mametchi.png; sourceTree = "<group>"; };
+		3F55012526769FA500D9D03C /* memetchi.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = memetchi.png; sourceTree = "<group>"; };
+		3F55012C2677CFEA00D9D03C /* egg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = egg.png; sourceTree = "<group>"; };
 		DBDF1B4F2323DE3F007CECB1 /* SDLProject */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = SDLProject; sourceTree = BUILT_PRODUCTS_DIR; };
 		DBDF1B522323DE3F007CECB1 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		DBDF1B592323DE8D007CECB1 /* ShaderProgram.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShaderProgram.h; sourceTree = "<group>"; };
@@ -90,9 +90,9 @@
 		DBDF1B512323DE3F007CECB1 /* SDLProject */ = {
 			isa = PBXGroup;
 			children = (
-				3F52ABB32674277A00578069 /* ctg.png */,
-				3F55011E26769A1C00D9D03C /* pokemon.png */,
-				3F55011D26769A1C00D9D03C /* tamagotchi.png */,
+				3F55012426769FA500D9D03C /* mametchi.png */,
+				3F55012526769FA500D9D03C /* memetchi.png */,
+				3F55012C2677CFEA00D9D03C /* egg.png */,
 				DBDF1B5B2323DE8D007CECB1 /* glm */,
 				DBDF1B5D2323DE8D007CECB1 /* ShaderProgram.cpp */,
 				DBDF1B592323DE8D007CECB1 /* ShaderProgram.h */,
