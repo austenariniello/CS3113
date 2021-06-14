@@ -36,14 +36,14 @@ glm::vec3 player2_dimensions = glm::vec3(1, 1, 0);
 glm::vec3 egg_dimensions = glm::vec3(0.5, 0.5, 0);
 
 float player_speed = 2.0f;
-float egg_speed = 1.0f;
+float egg_speed = 2.5f;
 int egg_direction;
 
 GLuint player1TextureID, player2TextureID, eggTextureID;
 
 bool HasCollided(glm::vec3 position1, glm::vec3 dimensions1, glm::vec3 position2, glm::vec3 dimensions2) {
     float xdist = fabs(position2.x - position1.x) - ((dimensions1.x + dimensions2.x) / 2.0f);
-    float ydist = fabs(position2.x - position1.x) - ((dimensions1.x + dimensions2.x) / 2.0f);
+    float ydist = fabs(position2.y - position1.y) - ((dimensions1.y + dimensions2.y) / 2.0f);
     return (xdist < 0 && ydist < 0);
 }
 
@@ -253,6 +253,55 @@ void Update() {
             egg_direction = 1;
         }
         egg_movement = EggPhysics(egg_direction);
+    }
+    
+    if (egg_position.x > 4.75f) {
+        egg_position.x = 4.75f;
+        egg_speed = 0.0f;
+        player_speed = 0.0f;
+    }
+    else if (egg_position.x < -4.75f) {
+        egg_position.x = -4.75f;
+        egg_speed = 0.0f;
+        player_speed = 0.0f;
+    }
+    
+    if (HasCollided(player1_position, player1_dimensions, egg_position, egg_dimensions)) {
+        if (egg_direction == 3)  {
+            egg_direction = 1;
+        }
+        else if (egg_direction == 4)  {
+            if (player1_movement.y > 0) {
+                egg_direction = 1;
+            }
+            else {
+                egg_direction = 7;
+            }
+        }
+        else if (egg_direction == 5)  {
+            egg_direction = 7;
+        }
+        egg_speed += 0.1f;
+        egg_movement = EggPhysics(egg_direction);
+    }
+    else if (HasCollided(player2_position, player2_dimensions, egg_position, egg_dimensions)) {
+        if (egg_direction == 1)  {
+            egg_direction = 3;
+        }
+        else if (egg_direction == 0)  {
+            if (player2_movement.y > 0) {
+                egg_direction = 3;
+            }
+            else {
+                egg_direction = 5;
+            }
+        }
+        else if (egg_direction == 7)  {
+            egg_direction = 5;
+        }
+        egg_speed += 0.1f;
+        egg_movement = EggPhysics(egg_direction);
+        
     }
     
     player1Matrix = glm::mat4(1.0f);
