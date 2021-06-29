@@ -21,12 +21,10 @@ int spacePressCount = 0;
 ShaderProgram program;
 glm::mat4 viewMatrix, player1Matrix, player2Matrix, eggMatrix, projectionMatrix;
 
-// Start at 0, 0, 0
 glm::vec3 player1_position = glm::vec3(-4.5, 0, 0);
 glm::vec3 player2_position = glm::vec3(4.5, 0, 0);
 glm::vec3 egg_position = glm::vec3(0,0,0);
 
-// Don’t go anywhere (yet).
 glm::vec3 player1_movement = glm::vec3(0, 0, 0);
 glm::vec3 player2_movement = glm::vec3(0, 0, 0);
 glm::vec3 egg_movement = glm::vec3(0,0,0);

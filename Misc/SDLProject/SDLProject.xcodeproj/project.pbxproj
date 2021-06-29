@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		3F52ABB42674279300578069 /* ctg.png in CopyFiles */ = {isa = PBXBuildFile; fileRef = 3F52ABB32674277A00578069 /* ctg.png */; };
+		3FDCE0E1267FCD2F004AA423 /* george_0.png in CopyFiles */ = {isa = PBXBuildFile; fileRef = 3FDCE0E0267FCD26004AA423 /* george_0.png */; };
+		3FDCE0E5267FD881004AA423 /* Entity.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3FDCE0E3267FD881004AA423 /* Entity.cpp */; };
 		DBDF1B532323DE3F007CECB1 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DBDF1B522323DE3F007CECB1 /* main.cpp */; };
 		DBDF1B5E2323DE8D007CECB1 /* ShaderProgram.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DBDF1B5D2323DE8D007CECB1 /* ShaderProgram.cpp */; };
 		DBDF1B612323DE9E007CECB1 /* shaders in CopyFiles */ = {isa = PBXBuildFile; fileRef = DBDF1B5C2323DE8D007CECB1 /* shaders */; };
@@ -27,6 +29,7 @@
 			files = (
 				DBDF1B612323DE9E007CECB1 /* shaders in CopyFiles */,
 				3F52ABB42674279300578069 /* ctg.png in CopyFiles */,
+				3FDCE0E1267FCD2F004AA423 /* george_0.png in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -34,6 +37,9 @@
 
 /* Begin PBXFileReference section */
 		3F52ABB32674277A00578069 /* ctg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ctg.png; sourceTree = "<group>"; };
+		3FDCE0E0267FCD26004AA423 /* george_0.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = george_0.png; sourceTree = "<group>"; };
+		3FDCE0E3267FD881004AA423 /* Entity.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Entity.cpp; sourceTree = "<group>"; };
+		3FDCE0E4267FD881004AA423 /* Entity.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Entity.h; sourceTree = "<group>"; };
 		DBDF1B4F2323DE3F007CECB1 /* SDLProject */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = SDLProject; sourceTree = BUILT_PRODUCTS_DIR; };
 		DBDF1B522323DE3F007CECB1 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		DBDF1B592323DE8D007CECB1 /* ShaderProgram.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShaderProgram.h; sourceTree = "<group>"; };
@@ -85,12 +91,15 @@
 			isa = PBXGroup;
 			children = (
 				3F52ABB32674277A00578069 /* ctg.png */,
+				3FDCE0E0267FCD26004AA423 /* george_0.png */,
 				DBDF1B5B2323DE8D007CECB1 /* glm */,
 				DBDF1B5D2323DE8D007CECB1 /* ShaderProgram.cpp */,
 				DBDF1B592323DE8D007CECB1 /* ShaderProgram.h */,
 				DBDF1B5C2323DE8D007CECB1 /* shaders */,
 				DBDF1B5A2323DE8D007CECB1 /* stb_image.h */,
 				DBDF1B522323DE3F007CECB1 /* main.cpp */,
+				3FDCE0E3267FD881004AA423 /* Entity.cpp */,
+				3FDCE0E4267FD881004AA423 /* Entity.h */,
 			);
 			path = SDLProject;
 			sourceTree = "<group>";
@@ -164,6 +173,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				DBDF1B532323DE3F007CECB1 /* main.cpp in Sources */,
+				3FDCE0E5267FD881004AA423 /* Entity.cpp in Sources */,
 				DBDF1B5E2323DE8D007CECB1 /* ShaderProgram.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
