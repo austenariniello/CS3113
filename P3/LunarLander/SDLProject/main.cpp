@@ -167,11 +167,11 @@ void ProcessInputGameLevel() {
 }
 
 void ProcessInputMissionSuccess() {
-    
+    // Do Nothing
 }
 
 void ProcessInputMissionFailure() {
-    
+    // Do Nothing
 }
 
 void ProcessInput() {
