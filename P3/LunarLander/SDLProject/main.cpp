@@ -17,7 +17,7 @@
 
 #include "Entity.h"
 
-#define PLATFORM_COUNT 10
+#define PLATFORM_COUNT 22
 
 struct GameState {
     Entity *player;
@@ -104,9 +104,9 @@ void Initialize() {
     GLuint wallTextureID = LoadTexture("platformPack_tile041.png");
     GLuint padTextureID = LoadTexture("platformPack_tile036.png");
     
-    float positionx = -4.5;
+    float positionx = -4.5f;
     
-    for (int i = 0; i < PLATFORM_COUNT; i++) {
+    for (int i = 0; i < 10; i++) {
         state.platforms[i].textureID = wallTextureID;
         state.platforms[i].position = glm::vec3(positionx, -3.25f, 0);
         state.platforms[i].entityType = WALL;
@@ -118,6 +118,19 @@ void Initialize() {
     
     state.platforms[7].textureID = padTextureID;
     state.platforms[7].entityType = LANDINGPAD;
+    
+    float positiony = -2.25;
+    
+    for (int i = 10; i < 22; i += 2) {
+        state.platforms[i].textureID = wallTextureID;
+        state.platforms[i].position = glm::vec3(-4.5f, positiony, 0);
+        state.platforms[i].entityType = WALL;
+        
+        state.platforms[i+1].textureID = wallTextureID;
+        state.platforms[i+1].position = glm::vec3(4.5f, positiony, 0);
+        state.platforms[i+1].entityType = WALL;
+        positiony++;
+    }
     
     for (int i = 0; i < PLATFORM_COUNT; i++) {
         state.platforms[i].Update(0, NULL, 0, &mode);
@@ -167,12 +180,13 @@ void ProcessInputGameLevel() {
     }
 }
 
-void ProcessInputMissionSuccess() {
-    // Do Nothing
-}
-
-void ProcessInputMissionFailure() {
-    // Do Nothing
+void ProcessInputGameOver() {
+    SDL_Event event;
+    while (SDL_PollEvent(&event)) {
+        if (event.type == SDL_QUIT || event.type == SDL_WINDOWEVENT_CLOSE) {
+            gameIsRunning = false;
+        }
+    }
 }
 
 void ProcessInput() {
@@ -182,10 +196,10 @@ void ProcessInput() {
             ProcessInputGameLevel();
             break;
         case MISSION_SUCCESS:
-            ProcessInputMissionSuccess();
+            ProcessInputGameOver();
             break;
         case MISSION_FAILURE:
-            ProcessInputMissionFailure();
+            ProcessInputGameOver();
             break;
         default:
             break;
