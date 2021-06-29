@@ -17,7 +17,7 @@
 
 #include "Entity.h"
 
-#define PLATFORM_COUNT 22
+#define PLATFORM_COUNT 29
 
 struct GameState {
     Entity *player;
@@ -94,7 +94,7 @@ void Initialize() {
     state.player->movement = glm::vec3(0);
     state.player->acceleration = glm::vec3(0, -0.1f, 0);
     state.player->speed = 1.5f;
-    state.player->textureID = LoadTexture("playerShip2_green.png");
+    state.player->textureID = LoadTexture("playerShip2_green.png");\
     
     state.player->height = 1;
     state.player->width = 1;
@@ -119,7 +119,7 @@ void Initialize() {
     state.platforms[7].textureID = padTextureID;
     state.platforms[7].entityType = LANDINGPAD;
     
-    float positiony = -2.25;
+    float positiony = -2.25f;
     
     for (int i = 10; i < 22; i += 2) {
         state.platforms[i].textureID = wallTextureID;
@@ -130,6 +130,24 @@ void Initialize() {
         state.platforms[i+1].position = glm::vec3(4.5f, positiony, 0);
         state.platforms[i+1].entityType = WALL;
         positiony++;
+    }
+    
+    positiony = -2.25f;
+    
+    for (int i = 22; i < 26; i++) {
+        state.platforms[i].textureID = wallTextureID;
+        state.platforms[i].position = glm::vec3(-1.5f, positiony, 0);
+        state.platforms[i].entityType = WALL;
+        positiony++;
+    }
+    
+    positionx = 3.5f;
+
+    for (int i = 26; i < 29; i++) {
+        state.platforms[i].textureID = wallTextureID;
+        state.platforms[i].position = glm::vec3(positionx, 1.75f, 0);
+        state.platforms[i].entityType = WALL;
+        positionx--;
     }
     
     for (int i = 0; i < PLATFORM_COUNT; i++) {
