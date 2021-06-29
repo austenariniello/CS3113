@@ -28,6 +28,7 @@ void Entity::CheckCollisionsY(Entity *objects, int objectCount)
 
         if (CheckCollision(object))
         {
+            lastCollided = object->entityType;
             float ydist = fabs(position.y - object->position.y);
             float penetrationY = fabs(ydist - (height / 2.0f) - (object->height / 2.0f));
             
@@ -53,6 +54,7 @@ void Entity::CheckCollisionsX(Entity *objects, int objectCount)
 
         if (CheckCollision(object))
         {
+            lastCollided = object->entityType;
             float xdist = fabs(position.x - object->position.x);
             float penetrationX = fabs(xdist - (width / 2.0f) - (object->width / 2.0f));
             
@@ -74,6 +76,8 @@ void Entity::Update(float deltaTime, Entity *platforms, int platformCount, GameM
 {
     
     if (isActive == false) return;
+    
+    if (*mode == MISSION_SUCCESS || *mode == MISSION_FAILURE) return;
     
     collidedTop = false;
     collidedBottom = false;
@@ -113,6 +117,9 @@ void Entity::Update(float deltaTime, Entity *platforms, int platformCount, GameM
     position.x += velocity.x * deltaTime;       // Move on X
     CheckCollisionsX(platforms, platformCount); // Fix if needed
     
+    if (lastCollided == WALL) *mode = MISSION_FAILURE;
+    else if (lastCollided == LANDINGPAD) *mode = MISSION_SUCCESS;
+    
     for (int i = 0; i < platformCount; i++)
     {
         Entity *platform = &platforms[i];
@@ -128,19 +135,6 @@ void Entity::Update(float deltaTime, Entity *platforms, int platformCount, GameM
             } else if (velocity.y < 0) {
                 position.y += penetrationY;
                 velocity.y = 0;
-            }
-            
-            switch (platform->entityType) {
-                case WALL:
-                    // Mission Failure
-                    *mode = MISSION_FAILURE;
-                    break;
-                case LANDINGPAD:
-                    // Mission Success
-                    *mode = MISSION_SUCCESS;
-                    break;
-                default:
-                    break;
             }
         }
         

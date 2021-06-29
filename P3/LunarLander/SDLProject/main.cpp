@@ -126,6 +126,7 @@ void Initialize() {
 }
 
 void ProcessInputGameLevel() {
+    
     if (state.player->acceleration.x > 0)  {
         state.player->acceleration.x -= 0.3f;
     }
@@ -247,14 +248,6 @@ float size, float spacing, glm::vec3 position)
     glDisableVertexAttribArray(program->texCoordAttribute);
 }
 
-void UpdateMissionSuccess(float deltaTime) {
-    // Do Nothing
-}
-
-void UpdateMissionFailure(float deltaTime) {
-    // Do Nothing
-}
-
 #define FIXED_TIMESTEP 0.0166666f
 
 float lastTicks = 0;
@@ -265,34 +258,20 @@ void Update() {
     float deltaTime = ticks - lastTicks;
     lastTicks = ticks;
     
-    switch (mode) {
-        case GAME_LEVEL:
-            
-            deltaTime += accumulator;
-            if (deltaTime < FIXED_TIMESTEP) {
-                accumulator = deltaTime;
-                return;
-            }
-
-            while (deltaTime >= FIXED_TIMESTEP) {
-                // Update. Notice it's FIXED_TIMESTEP. Not deltaTime
-                state.player->Update(FIXED_TIMESTEP, state.platforms, PLATFORM_COUNT, &mode);
-
-                deltaTime -= FIXED_TIMESTEP;
-            }
-
-            accumulator = deltaTime;
-            
-            break;
-        case MISSION_SUCCESS:
-            UpdateMissionSuccess(deltaTime);
-            break;
-        case MISSION_FAILURE:
-            UpdateMissionFailure(deltaTime);
-            break;
-        default:
-            break;
+    deltaTime += accumulator;
+    if (deltaTime < FIXED_TIMESTEP) {
+        accumulator = deltaTime;
+        return;
     }
+
+    while (deltaTime >= FIXED_TIMESTEP) {
+        // Update. Notice it's FIXED_TIMESTEP. Not deltaTime
+        state.player->Update(FIXED_TIMESTEP, state.platforms, PLATFORM_COUNT, &mode);
+
+        deltaTime -= FIXED_TIMESTEP;
+    }
+
+    accumulator = deltaTime;
 
 }
 
@@ -310,22 +289,20 @@ void RenderMissionFailure() {
 void Render() {
     glClear(GL_COLOR_BUFFER_BIT);
     
+    for (int i = 0; i < PLATFORM_COUNT; i++) {
+        state.platforms[i].Render(&program);
+    }
+    
+    state.player->Render(&program);
+    
     switch (mode) {
         case GAME_LEVEL:
-            
-            for (int i = 0; i < PLATFORM_COUNT; i++) {
-                state.platforms[i].Render(&program);
-            }
-            
-            state.player->Render(&program);
-            
-            
             break;
         case MISSION_SUCCESS:
-            //  RenderMissionSuccess();
+            RenderMissionSuccess();
             break;
         case MISSION_FAILURE:
-            // RenderMissionFailure();
+            RenderMissionFailure();
             break;
         default:
             break;

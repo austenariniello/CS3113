@@ -19,6 +19,7 @@ class Entity {
 public:
     
     EntityType entityType;
+    EntityType lastCollided;
     
     glm::vec3 position;
     glm::vec3 movement;
