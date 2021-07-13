@@ -193,10 +193,10 @@ void Entity::Update(float deltaTime, Entity *player, Entity *platforms, int plat
     position.y += velocity.y * deltaTime;
     position.x += velocity.x * deltaTime;
     
+    CheckCollisionsX(enemies, enemyCount);
+    CheckCollisionsY(enemies, enemyCount);
+    
     if (entityType == PLAYER) {
-        
-        CheckCollisionsY(enemies, enemyCount);
-        CheckCollisionsX(enemies, enemyCount);
         
         if (collidedBottom) {
             lastCollided->isActive = false;
@@ -207,74 +207,8 @@ void Entity::Update(float deltaTime, Entity *player, Entity *platforms, int plat
         }
     }
     
-    for (int i = 0; i < enemyCount; i++)
-    {
-        Entity *enemy = &enemies[i];
-
-        if (CheckCollision(enemy))
-        {
-            
-            float xdist = fabs(position.x - enemy->position.x);
-            float penetrationX = fabs(xdist - (width / 2.0f) - (enemy->width / 2.0f));
-            
-            if (velocity.x > 0) {
-                position.x -= penetrationX;
-                velocity.x = 0;
-            } else if (velocity.x < 0) {
-                position.x += penetrationX;
-                velocity.x = 0;
-            }
-            
-            float ydist = fabs(position.y - enemy->position.y);
-            float penetrationY = fabs(ydist - (height / 2.0f) - (enemy->height / 2.0f));
-            
-            if (velocity.y > 0) {
-                position.y -= penetrationY;
-                velocity.y = 0;
-            } else if (velocity.y < 0) {
-                position.y += penetrationY;
-                velocity.y = 0;
-            }
-            
-            
-        }
-    }
-    
     CheckCollisionsY(platforms, platformCount);
     CheckCollisionsX(platforms, platformCount);
-    
-    for (int i = 0; i < platformCount; i++)
-    {
-        Entity *platform = &platforms[i];
-
-        if (CheckCollision(platform))
-        {
-            
-            float xdist = fabs(position.x - platform->position.x);
-            float penetrationX = fabs(xdist - (width / 2.0f) - (platform->width / 2.0f));
-            
-            if (velocity.x > 0) {
-                position.x -= penetrationX;
-                velocity.x = 0;
-            } else if (velocity.x < 0) {
-                position.x += penetrationX;
-                velocity.x = 0;
-            }
-            
-            float ydist = fabs(position.y - platform->position.y);
-            float penetrationY = fabs(ydist - (height / 2.0f) - (platform->height / 2.0f));
-            
-            if (velocity.y > 0) {
-                position.y -= penetrationY;
-                velocity.y = 0;
-            } else if (velocity.y < 0) {
-                position.y += penetrationY;
-                velocity.y = 0;
-            }
-            
-            
-        }
-    }
     
     modelMatrix = glm::mat4(1.0f);
     modelMatrix = glm::translate(modelMatrix, position);
