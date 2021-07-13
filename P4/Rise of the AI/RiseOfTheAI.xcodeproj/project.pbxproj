@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3F9161BE269E164B00820CB2 /* font1.png in CopyFiles */ = {isa = PBXBuildFile; fileRef = 3F9161BD269E163A00820CB2 /* font1.png */; };
 		3FDCE0EB2683BC09004AA423 /* ctg.png in CopyFiles */ = {isa = PBXBuildFile; fileRef = 3FDCE0E92683BBF9004AA423 /* ctg.png */; };
 		3FDCE0ED2683BC0C004AA423 /* george_0.png in CopyFiles */ = {isa = PBXBuildFile; fileRef = 3FDCE0EA2683BBF9004AA423 /* george_0.png */; };
 		3FDCE0F12683BC40004AA423 /* Entity.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3FDCE0EF2683BC40004AA423 /* Entity.cpp */; };
@@ -29,6 +30,7 @@
 			dstSubfolderSpec = 6;
 			files = (
 				DBDF1B612323DE9E007CECB1 /* shaders in CopyFiles */,
+				3F9161BE269E164B00820CB2 /* font1.png in CopyFiles */,
 				3FDCE0EB2683BC09004AA423 /* ctg.png in CopyFiles */,
 				3FDCE0ED2683BC0C004AA423 /* george_0.png in CopyFiles */,
 				3FDCE0F42683C065004AA423 /* platformPack_tile001.png in CopyFiles */,
@@ -38,6 +40,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		3F9161BD269E163A00820CB2 /* font1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = font1.png; sourceTree = "<group>"; };
 		3FDCE0E92683BBF9004AA423 /* ctg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ctg.png; sourceTree = "<group>"; };
 		3FDCE0EA2683BBF9004AA423 /* george_0.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = george_0.png; sourceTree = "<group>"; };
 		3FDCE0EF2683BC40004AA423 /* Entity.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Entity.cpp; sourceTree = "<group>"; };
@@ -93,6 +96,7 @@
 		DBDF1B512323DE3F007CECB1 /* SDLProject */ = {
 			isa = PBXGroup;
 			children = (
+				3F9161BD269E163A00820CB2 /* font1.png */,
 				3FDCE0E92683BBF9004AA423 /* ctg.png */,
 				3FDCE0EA2683BBF9004AA423 /* george_0.png */,
 				3FDCE0F32683BEE2004AA423 /* platformPack_tile001.png */,
@@ -154,7 +158,7 @@
 					};
 				};
 			};
-			buildConfigurationList = DBDF1B4A2323DE3F007CECB1 /* Build configuration list for PBXProject "SDLProject" */;
+			buildConfigurationList = DBDF1B4A2323DE3F007CECB1 /* Build configuration list for PBXProject "RiseOfTheAI" */;
 			compatibilityVersion = "Xcode 9.3";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -333,7 +337,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		DBDF1B4A2323DE3F007CECB1 /* Build configuration list for PBXProject "SDLProject" */ = {
+		DBDF1B4A2323DE3F007CECB1 /* Build configuration list for PBXProject "RiseOfTheAI" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				DBDF1B542323DE3F007CECB1 /* Debug */,

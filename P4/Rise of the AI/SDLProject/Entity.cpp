@@ -31,6 +31,8 @@ void Entity::CheckCollisionsY(Entity *objects, int objectCount)
 
         if (CheckCollision(object))
         {
+            lastCollided = object;
+            
             float ydist = fabs(position.y - object->position.y);
             float penetrationY = fabs(ydist - (height / 2.0f) - (object->height / 2.0f));
             
@@ -56,6 +58,8 @@ void Entity::CheckCollisionsX(Entity *objects, int objectCount)
 
         if (CheckCollision(object))
         {
+            lastCollided = object;
+            
             float xdist = fabs(position.x - object->position.x);
             float penetrationX = fabs(xdist - (width / 2.0f) - (object->width / 2.0f));
             
@@ -73,19 +77,45 @@ void Entity::CheckCollisionsX(Entity *objects, int objectCount)
     }
 }
 
-void Entity::AIWalker() {
-    movement = glm::vec3(-1, 0, 0);
+void Entity::AIPatroler() {
+    switch (aiState) {
+        case WALKING:
+            if (position.x <= -1) {
+                movement = glm::vec3(1, 0, 0);
+            }
+            if (position.x >= 1) {
+                movement = glm::vec3(-1, 0, 0);
+            }
+            break;
+        default:
+            break;
+    }
+}
+
+void Entity::AIJumper() {
+    switch (aiState) {
+        case JUMPING:
+            if (position.y <= -2.25) {
+                movement = glm::vec3(0, 1, 0);
+            }
+            if (position.y >= 1) {
+                movement = glm::vec3(0, -1, 0);
+            }
+            break;
+        default:
+            break;
+    }
 }
 
 void Entity::AIWaitAndGo(Entity *player) {
     switch (aiState) {
         case IDLE:
             if (glm::distance(position, player->position) < 3.0f) {
-                aiState = WALKING;
+                aiState = ATTACKING;
             }
             break;
             
-        case WALKING:
+        case ATTACKING:
             if (player->position.x < position.x) {
                 movement = glm::vec3(-1, 0, 0);
             }
@@ -101,12 +131,16 @@ void Entity::AIWaitAndGo(Entity *player) {
 
 void Entity::AI(Entity *player) {
     switch (aiType) {
-        case WALKER:
-            AIWalker();
+        case PATROLER:
+            AIPatroler();
             break;
             
         case WAITANDGO:
             AIWaitAndGo(player);
+            break;
+        
+        case JUMPER:
+            AIJumper();
             break;
             
         default:
@@ -114,9 +148,11 @@ void Entity::AI(Entity *player) {
     }
 }
 
-void Entity::Update(float deltaTime, Entity *player, Entity *platforms, int platformCount)
+void Entity::Update(float deltaTime, Entity *player, Entity *platforms, int platformCount, Entity *enemies, int enemyCount, GameMode *mode)
 {
     if (isActive == false) return;
+    
+    if (*mode == GAME_WON || *mode == GAME_LOST) return;
     
     collidedTop = false;
     collidedBottom = false;
@@ -154,11 +190,25 @@ void Entity::Update(float deltaTime, Entity *player, Entity *platforms, int plat
     velocity.x = movement.x * speed;
     velocity += acceleration * deltaTime;
     
-    position.y += velocity.y * deltaTime;       // Move on Y
-    CheckCollisionsY(platforms, platformCount); // Fix if needed
-
-    position.x += velocity.x * deltaTime;       // Move on X
-    CheckCollisionsX(platforms, platformCount); // Fix if needed
+    position.y += velocity.y * deltaTime;
+    position.x += velocity.x * deltaTime;
+    
+    if (entityType == PLAYER) {
+        
+        CheckCollisionsY(enemies, enemyCount);
+        CheckCollisionsX(enemies, enemyCount);
+        
+        if (collidedBottom) {
+            lastCollided->isActive = false;
+        }
+        else if (collidedLeft || collidedRight || collidedTop) {
+            isActive = false;
+            *mode = GAME_LOST;
+        }
+    }
+    
+    CheckCollisionsY(platforms, platformCount);
+    CheckCollisionsX(platforms, platformCount);
     
     for (int i = 0; i < platformCount; i++)
     {
