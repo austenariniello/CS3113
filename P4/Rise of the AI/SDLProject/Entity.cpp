@@ -207,6 +207,39 @@ void Entity::Update(float deltaTime, Entity *player, Entity *platforms, int plat
         }
     }
     
+    for (int i = 0; i < enemyCount; i++)
+    {
+        Entity *enemy = &enemies[i];
+
+        if (CheckCollision(enemy))
+        {
+            
+            float xdist = fabs(position.x - enemy->position.x);
+            float penetrationX = fabs(xdist - (width / 2.0f) - (enemy->width / 2.0f));
+            
+            if (velocity.x > 0) {
+                position.x -= penetrationX;
+                velocity.x = 0;
+            } else if (velocity.x < 0) {
+                position.x += penetrationX;
+                velocity.x = 0;
+            }
+            
+            float ydist = fabs(position.y - enemy->position.y);
+            float penetrationY = fabs(ydist - (height / 2.0f) - (enemy->height / 2.0f));
+            
+            if (velocity.y > 0) {
+                position.y -= penetrationY;
+                velocity.y = 0;
+            } else if (velocity.y < 0) {
+                position.y += penetrationY;
+                velocity.y = 0;
+            }
+            
+            
+        }
+    }
+    
     CheckCollisionsY(platforms, platformCount);
     CheckCollisionsX(platforms, platformCount);
     
@@ -216,6 +249,18 @@ void Entity::Update(float deltaTime, Entity *player, Entity *platforms, int plat
 
         if (CheckCollision(platform))
         {
+            
+            float xdist = fabs(position.x - platform->position.x);
+            float penetrationX = fabs(xdist - (width / 2.0f) - (platform->width / 2.0f));
+            
+            if (velocity.x > 0) {
+                position.x -= penetrationX;
+                velocity.x = 0;
+            } else if (velocity.x < 0) {
+                position.x += penetrationX;
+                velocity.x = 0;
+            }
+            
             float ydist = fabs(position.y - platform->position.y);
             float penetrationY = fabs(ydist - (height / 2.0f) - (platform->height / 2.0f));
             
@@ -226,6 +271,8 @@ void Entity::Update(float deltaTime, Entity *player, Entity *platforms, int plat
                 position.y += penetrationY;
                 velocity.y = 0;
             }
+            
+            
         }
     }
     
