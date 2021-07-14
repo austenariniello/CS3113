@@ -92,15 +92,18 @@ void Entity::AIPatroler() {
     }
 }
 
-void Entity::AIJumper() {
+void Entity::AIFlyer() {
     switch (aiState) {
-        case JUMPING:
-            if (position.y <= -2.25) {
+        case FLYING:
+            if (position.y <= -2) {
                 movement = glm::vec3(0, 1, 0);
             }
-            if (position.y >= 1) {
+            if (position.y >= 2) {
                 movement = glm::vec3(0, -1, 0);
             }
+            
+            velocity.y = movement.y * speed;
+            
             break;
         default:
             break;
@@ -139,8 +142,8 @@ void Entity::AI(Entity *player) {
             AIWaitAndGo(player);
             break;
         
-        case JUMPER:
-            AIJumper();
+        case FLYER:
+            AIFlyer();
             break;
             
         default:
@@ -198,12 +201,12 @@ void Entity::Update(float deltaTime, Entity *player, Entity *platforms, int plat
     
     if (entityType == PLAYER) {
         
-        if (collidedBottom) {
-            lastCollided->isActive = false;
-        }
-        else if (collidedLeft || collidedRight || collidedTop) {
+        if (collidedLeft || collidedRight || collidedTop) {
             isActive = false;
             *mode = GAME_LOST;
+        }
+        if (collidedBottom) {
+            lastCollided->isActive = false;
         }
     }
     

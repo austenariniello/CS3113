@@ -204,7 +204,7 @@ void Initialize() {
         state.enemies[i].speed = 1;
         
         state.enemies[i].height = 1;
-        state.enemies[i].width = 1;
+        state.enemies[i].width = 0.8f;
         
     }
     
@@ -216,9 +216,10 @@ void Initialize() {
     state.enemies[1].aiType = PATROLER;
     state.enemies[1].aiState = WALKING;
     
-    state.enemies[2].position = glm::vec3(2.5, -2.25f, 0);
-    state.enemies[2].aiType = JUMPER;
-    state.enemies[2].aiState = JUMPING;
+    state.enemies[2].position = glm::vec3(2.5, -2, 0);
+    state.enemies[2].aiType = FLYER;
+    state.enemies[2].aiState = FLYING;
+    state.enemies[2].acceleration = glm::vec3(0);
     state.enemies[2].jumpPower = 3.0f;
     
 }
