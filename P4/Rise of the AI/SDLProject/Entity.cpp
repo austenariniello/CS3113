@@ -193,26 +193,34 @@ void Entity::Update(float deltaTime, Entity *player, Entity *platforms, int plat
     velocity.x = movement.x * speed;
     velocity += acceleration * deltaTime;
     
-    position.y += velocity.y * deltaTime;
     position.x += velocity.x * deltaTime;
-    
     CheckCollisionsX(enemies, enemyCount);
-    CheckCollisionsY(enemies, enemyCount);
-    
     if (entityType == PLAYER) {
-        
-        if (collidedBottom) {
-            lastCollided->isActive = false;
-        }
-        else if (collidedLeft || collidedRight || collidedTop) {
+        if (collidedLeft || collidedRight) {
             isActive = false;
             *mode = GAME_LOST;
         }
-        
     }
-    
-    CheckCollisionsY(platforms, platformCount);
     CheckCollisionsX(platforms, platformCount);
+    
+    position.y += velocity.y * deltaTime;
+    CheckCollisionsY(enemies, enemyCount);
+    if (entityType == PLAYER) {
+        if (collidedBottom) {
+            lastCollided->isActive = false;
+        }
+        else if (collidedTop) {
+            isActive = false;
+            *mode = GAME_LOST;
+        }
+    }
+    CheckCollisionsY(platforms, platformCount);
+    
+    
+    
+    
+    
+    
     
     modelMatrix = glm::mat4(1.0f);
     modelMatrix = glm::translate(modelMatrix, position);

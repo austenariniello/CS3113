@@ -157,7 +157,7 @@ void Initialize() {
     state.player->height = 1;
     state.player->width = 0.7f;
     
-    state.player->jumpPower = 8.0f;
+    state.player->jumpPower = 8.5f;
     
     state.platforms = new Entity[PLATFORM_COUNT];
     
