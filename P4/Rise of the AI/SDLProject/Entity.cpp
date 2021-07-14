@@ -201,13 +201,14 @@ void Entity::Update(float deltaTime, Entity *player, Entity *platforms, int plat
     
     if (entityType == PLAYER) {
         
-        if (collidedLeft || collidedRight || collidedTop) {
-            isActive = false;
-            *mode = GAME_LOST;
-        }
         if (collidedBottom) {
             lastCollided->isActive = false;
         }
+        else if (collidedLeft || collidedRight || collidedTop) {
+            isActive = false;
+            *mode = GAME_LOST;
+        }
+        
     }
     
     CheckCollisionsY(platforms, platformCount);

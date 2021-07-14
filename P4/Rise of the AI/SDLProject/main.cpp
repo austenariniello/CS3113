@@ -116,7 +116,7 @@ float size, float spacing, glm::vec3 position)
 
 void Initialize() {
     SDL_Init(SDL_INIT_VIDEO);
-    displayWindow = SDL_CreateWindow("Textured!", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 640, 480, SDL_WINDOW_OPENGL);
+    displayWindow = SDL_CreateWindow("Rise of the AI!", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 640, 480, SDL_WINDOW_OPENGL);
     SDL_GLContext context = SDL_GL_CreateContext(displayWindow);
     SDL_GL_MakeCurrent(displayWindow, context);
     
@@ -152,28 +152,16 @@ void Initialize() {
     state.player->movement = glm::vec3(0);
     state.player->acceleration = glm::vec3(0, -9.81f, 0);
     state.player->speed = 1.5f;
-    state.player->textureID = LoadTexture("george_0.png");
+    state.player->textureID = LoadTexture("character_roundRed.png");
     
-    state.player->animRight = new int[4] {3, 7, 11, 15};
-    state.player->animLeft = new int[4] {1, 5, 9, 13};
-    state.player->animUp = new int[4] {2, 6, 10, 14};
-    state.player->animDown = new int[4] {0, 4, 8, 12};
-
-    state.player->animIndices = state.player->animRight;
-    state.player->animFrames = 4;
-    state.player->animIndex = 0;
-    state.player->animTime = 0;
-    state.player->animCols = 4;
-    state.player->animRows = 4;
-    
-    state.player->height = 0.8f;
-    state.player->width = 0.8f;
+    state.player->height = 1;
+    state.player->width = 0.7f;
     
     state.player->jumpPower = 8.0f;
     
     state.platforms = new Entity[PLATFORM_COUNT];
     
-    GLuint platformTextureID = LoadTexture("platformPack_tile001.png");
+    GLuint platformTextureID = LoadTexture("tile_brick.png");
     
     for (int i = 0; i < 11; i++) {
         
@@ -194,7 +182,7 @@ void Initialize() {
     }
     
     state.enemies = new Entity[ENEMY_COUNT];
-    GLuint enemyTextureID = LoadTexture("ctg.png");
+    GLuint enemyTextureID = LoadTexture("character_squareYellow.png");
     
     for (int i = 0; i < ENEMY_COUNT; i++) {
         state.enemies[i].entityType = ENEMY;
@@ -204,7 +192,7 @@ void Initialize() {
         state.enemies[i].speed = 1;
         
         state.enemies[i].height = 1;
-        state.enemies[i].width = 0.8f;
+        state.enemies[i].width = 0.7f;
         
     }
     
