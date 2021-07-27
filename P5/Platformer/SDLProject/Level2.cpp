@@ -3,7 +3,7 @@
 #define LEVEL2_WIDTH 30
 #define LEVEL2_HEIGHT 8
 
-#define LEVEL2_ENEMY_COUNT 1
+#define LEVEL2_ENEMY_COUNT 2
 
 unsigned int level2_data[] =
 {
@@ -60,20 +60,22 @@ void Level2::Initialize(int playerLives) {
     for (int i = 0; i < LEVEL2_ENEMY_COUNT; i++) {
         state.enemies[i].entityType = ENEMY;
         state.enemies[i].textureID = enemyTextureID;
-        state.enemies[i].position = glm::vec3(18 + i, -5, 0);
         state.enemies[i].acceleration = glm::vec3(0, -9.81f, 0);
         
         state.enemies[i].aiType = WAITANDGO;
         state.enemies[i].aiState = IDLE;
         state.enemies[i].speed = 1;
     }
+    
+    state.enemies[0].position = glm::vec3(8, -6, 0);
+    state.enemies[1].position = glm::vec3(18, -5, 0);
 }
 
 void Level2::Update(float deltaTime) {
     state.player->Update(deltaTime, state.player, state.enemies, LEVEL2_ENEMY_COUNT, state.map);
     
     if (state.player->position.y <= -10) {
-        state.nextScene = 5;
+        state.player->PlayerHit();
     }
     else if (state.player->position.x >= 27) {
         state.nextScene = 3;
@@ -81,6 +83,10 @@ void Level2::Update(float deltaTime) {
     
     for (int i = 0; i < LEVEL2_ENEMY_COUNT; i++) {
         state.enemies[i].Update(deltaTime, state.player, state.enemies, LEVEL2_ENEMY_COUNT, state.map);
+        
+        if (state.enemies[i].position.y <= -10) {
+            state.enemies[i].isActive = false;
+        }
     }
 }
 

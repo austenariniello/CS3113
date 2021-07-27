@@ -255,17 +255,48 @@ void Entity::Update(float deltaTime, Entity *player, Entity *objects, int object
             }
         }
     }
+    else if (entityType == ENEMY) {
+        if (collidedLeft) {
+            if (lastCollided->entityType == PLAYER) {
+                lastCollided->PlayerHit();
+                return;
+            }
+        }
+        else if (collidedRight) {
+            if (lastCollided->entityType == PLAYER) {
+                lastCollided->PlayerHit();
+                return;
+            }
+        }
+    }
     CheckCollisionsX(map);
     
        
     CheckCollisionsY(objects, objectCount); // Fix if needed
     if (entityType == PLAYER) {
         if (collidedBottom) {
-            lastCollided->isActive = false;
+            if (lastCollided->entityType == ENEMY) {
+                lastCollided->isActive = false;
+            }
         }
         else if (collidedTop) {
-            PlayerHit();
-            return;
+            if (lastCollided->entityType == ENEMY) {
+                PlayerHit();
+                return;
+            }
+        }
+    }
+    else if (entityType == ENEMY) {
+        if (collidedBottom) {
+            if (lastCollided->entityType == ENEMY) {
+                isActive = false;
+            }
+        }
+        else if (collidedTop) {
+            if (lastCollided->entityType == ENEMY) {
+                lastCollided->PlayerHit();
+                return;
+            }
         }
     }
     CheckCollisionsY(map);

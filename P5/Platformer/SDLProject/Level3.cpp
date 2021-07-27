@@ -67,13 +67,15 @@ void Level3::Initialize(int playerLives) {
         state.enemies[i].aiState = IDLE;
         state.enemies[i].speed = 1;
     }
+    
+    state.enemies[0].position = glm::vec3(12, -3, 0);
 }
 
 void Level3::Update(float deltaTime) {
     state.player->Update(deltaTime, state.player, state.enemies, LEVEL3_ENEMY_COUNT, state.map);
     
     if (state.player->position.y <= -10) {
-        state.nextScene = 5;
+        state.player->PlayerHit();
     }
     else if (state.player->position.x >= 28) {
         state.nextScene = 4;
@@ -81,6 +83,10 @@ void Level3::Update(float deltaTime) {
     
     for (int i = 0; i < LEVEL3_ENEMY_COUNT; i++) {
         state.enemies[i].Update(deltaTime, state.player, state.enemies, LEVEL3_ENEMY_COUNT, state.map);
+        
+        if (state.enemies[i].position.y <= -10) {
+            state.enemies[i].isActive = false;
+        }
     }
 }
 
