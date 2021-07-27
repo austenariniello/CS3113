@@ -22,6 +22,8 @@ class Entity {
 public:
     
     EntityType entityType;
+    Entity *lastCollided;
+    
     AIType aiType;
     AIState aiState;
     

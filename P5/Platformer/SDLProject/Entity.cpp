@@ -31,6 +31,8 @@ void Entity::CheckCollisionsY(Entity *objects, int objectCount)
 
         if (CheckCollision(object))
         {
+            lastCollided = object;
+            
             float ydist = fabs(position.y - object->position.y);
             float penetrationY = fabs(ydist - (height / 2.0f) - (object->height / 2.0f));
             
@@ -56,6 +58,8 @@ void Entity::CheckCollisionsX(Entity *objects, int objectCount)
 
         if (CheckCollision(object))
         {
+            lastCollided = object;
+            
             float xdist = fabs(position.x - object->position.x);
             float penetrationX = fabs(xdist - (width / 2.0f) - (object->width / 2.0f));
             
@@ -227,13 +231,26 @@ void Entity::Update(float deltaTime, Entity *player, Entity *objects, int object
     velocity.x = movement.x * speed;
     velocity += acceleration * deltaTime;
     
-    position.y += velocity.y * deltaTime;   // Move on Y
-    CheckCollisionsY(map);
-    CheckCollisionsY(objects, objectCount); // Fix if needed
-
     position.x += velocity.x * deltaTime;   // Move on X
-    CheckCollisionsX(map);
     CheckCollisionsX(objects, objectCount); // Fix if needed
+    if (entityType == PLAYER) {
+        if (collidedLeft || collidedRight) {
+            isActive = false;
+        }
+    }
+    CheckCollisionsX(map);
+    
+    position.y += velocity.y * deltaTime;   // Move on Y
+    CheckCollisionsY(objects, objectCount); // Fix if needed
+    if (entityType == PLAYER) {
+        if (collidedBottom) {
+            lastCollided->isActive = false;
+        }
+        else if (collidedTop) {
+            isActive = false;
+        }
+    }
+    CheckCollisionsY(map);
     
     modelMatrix = glm::mat4(1.0f);
     modelMatrix = glm::translate(modelMatrix, position);
