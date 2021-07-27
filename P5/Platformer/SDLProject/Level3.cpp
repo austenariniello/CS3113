@@ -1,20 +1,20 @@
 #include "Level3.h"
 
-#define LEVEL3_WIDTH 14
+#define LEVEL3_WIDTH 30
 #define LEVEL3_HEIGHT 8
 
 #define LEVEL3_ENEMY_COUNT 1
 
 unsigned int level3_data[] =
 {
-    3, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16,
-    3, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16,
-    3, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16,
-    3, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16,
-    3, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16,
-    3, 16, 16, 16, 16, 16, 16, 16, 16, 1, 1, 1, 1, 1,
-    3, 1, 1, 1, 1, 1, 1, 16, 16, 2, 2, 2, 2, 2,
-    3, 2, 2, 2, 2, 2, 2, 16, 16, 2, 2, 2, 2, 2
+    38, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16,
+    50, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16,
+    50, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16,
+    50, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16,
+    50, 16, 16, 16, 16, 16, 16, 16, 16, 54, 55, 55, 56, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 42, 43, 44,
+    50, 16, 16, 16, 16, 54, 56, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 54, 56, 16, 16, 16, 16, 16, 16, 16, 16,
+    50, 16, 54, 56, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 54, 56, 16, 16, 16, 16, 54, 56, 16, 16, 16, 16, 16,
+    50, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16,
 };
 
 void Level3::Initialize(int playerLives) {
@@ -30,10 +30,11 @@ void Level3::Initialize(int playerLives) {
     // Initialize Player
     state.player = new Entity();
     state.player->entityType = PLAYER;
-    state.player->position = glm::vec3(5, 0, 0);
+    state.player->position = glm::vec3(2.5, 0, 0);
+    state.player->startPosition = glm::vec3(2.5, 0, 0);
     state.player->movement = glm::vec3(0);
     state.player->acceleration = glm::vec3(0, -9.81f, 0);
-    state.player->speed = 2.0f;
+    state.player->speed = 2.7f;
     state.player->textureID = Util::LoadTexture("player.png");
     
     state.player->animRight = new int[6] {0, 1, 2, 3, 4, 5};
@@ -47,7 +48,7 @@ void Level3::Initialize(int playerLives) {
     state.player->animRows = 2;
     
     state.player->height = 1;
-    state.player->width = 0.8;
+    state.player->width = 0.8f;
     
     state.player->jumpPower = 6.0f;
     
@@ -59,7 +60,7 @@ void Level3::Initialize(int playerLives) {
     for (int i = 0; i < LEVEL3_ENEMY_COUNT; i++) {
         state.enemies[i].entityType = ENEMY;
         state.enemies[i].textureID = enemyTextureID;
-        state.enemies[i].position = glm::vec3(9 + i, -4, 0);
+        state.enemies[i].position = glm::vec3(12 + i, -3, 0);
         state.enemies[i].acceleration = glm::vec3(0, -9.81f, 0);
         
         state.enemies[i].aiType = WAITANDGO;
@@ -71,7 +72,10 @@ void Level3::Initialize(int playerLives) {
 void Level3::Update(float deltaTime) {
     state.player->Update(deltaTime, state.player, state.enemies, LEVEL3_ENEMY_COUNT, state.map);
     
-    if (state.player->position.x >= 12) {
+    if (state.player->position.y <= -10) {
+        state.nextScene = 5;
+    }
+    else if (state.player->position.x >= 28) {
         state.nextScene = 4;
     }
     

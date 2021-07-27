@@ -15,6 +15,8 @@
 		3F54EDC826AFB11E00D72A4E /* slime.png in CopyFiles */ = {isa = PBXBuildFile; fileRef = 3F54EDC726AFB11900D72A4E /* slime.png */; };
 		3F54EDCD26B04DC300D72A4E /* GameWon.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3F54EDCB26B04DC300D72A4E /* GameWon.cpp */; };
 		3F54EDD126B04DCF00D72A4E /* GameLost.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3F54EDCF26B04DCF00D72A4E /* GameLost.cpp */; };
+		3F6CB49E26B0910200FC9EB2 /* relaxed_village.mp3 in CopyFiles */ = {isa = PBXBuildFile; fileRef = 3F6CB49C26B090DF00FC9EB2 /* relaxed_village.mp3 */; };
+		3F6CB4A026B0910500FC9EB2 /* SFX_Jump_07.wav in CopyFiles */ = {isa = PBXBuildFile; fileRef = 3F6CB49D26B090EC00FC9EB2 /* SFX_Jump_07.wav */; };
 		3FAEB81C26A1D1770003752B /* Map.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3FAEB81A26A1D1770003752B /* Map.cpp */; };
 		3FAEB82126A1D93C0003752B /* Util.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3FAEB81F26A1D93C0003752B /* Util.cpp */; };
 		3FAEB82626A1DC680003752B /* Scene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3FAEB82426A1DC680003752B /* Scene.cpp */; };
@@ -43,6 +45,8 @@
 				3F54EDBA26AFA84100D72A4E /* tileset.png in CopyFiles */,
 				3F54EDBE26AFAE7500D72A4E /* player.png in CopyFiles */,
 				3F54EDC826AFB11E00D72A4E /* slime.png in CopyFiles */,
+				3F6CB49E26B0910200FC9EB2 /* relaxed_village.mp3 in CopyFiles */,
+				3F6CB4A026B0910500FC9EB2 /* SFX_Jump_07.wav in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -61,6 +65,8 @@
 		3F54EDCC26B04DC300D72A4E /* GameWon.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GameWon.h; sourceTree = "<group>"; };
 		3F54EDCF26B04DCF00D72A4E /* GameLost.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = GameLost.cpp; sourceTree = "<group>"; };
 		3F54EDD026B04DCF00D72A4E /* GameLost.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GameLost.h; sourceTree = "<group>"; };
+		3F6CB49C26B090DF00FC9EB2 /* relaxed_village.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = relaxed_village.mp3; sourceTree = "<group>"; };
+		3F6CB49D26B090EC00FC9EB2 /* SFX_Jump_07.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = SFX_Jump_07.wav; sourceTree = "<group>"; };
 		3FAEB81A26A1D1770003752B /* Map.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Map.cpp; sourceTree = "<group>"; };
 		3FAEB81B26A1D1770003752B /* Map.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Map.h; sourceTree = "<group>"; };
 		3FAEB81F26A1D93C0003752B /* Util.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Util.cpp; sourceTree = "<group>"; };
@@ -127,6 +133,8 @@
 				3F54EDBC26AFADF400D72A4E /* player.png */,
 				3F54EDB926AFA82E00D72A4E /* tileset.png */,
 				3F54EDB026AF13BA00D72A4E /* font1.png */,
+				3F6CB49C26B090DF00FC9EB2 /* relaxed_village.mp3 */,
+				3F6CB49D26B090EC00FC9EB2 /* SFX_Jump_07.wav */,
 				DBDF1B5B2323DE8D007CECB1 /* glm */,
 				DBDF1B5D2323DE8D007CECB1 /* ShaderProgram.cpp */,
 				DBDF1B592323DE8D007CECB1 /* ShaderProgram.h */,

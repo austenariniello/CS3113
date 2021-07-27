@@ -30,6 +30,7 @@ public:
     int playerLives = NULL;
     
     glm::vec3 position;
+    glm::vec3 startPosition;
     glm::vec3 movement;
     glm::vec3 acceleration;
     glm::vec3 velocity;
@@ -80,4 +81,6 @@ public:
     void AI(Entity *player);
     void AIWalker();
     void AIWaitAndGo(Entity *player);
+    
+    void PlayerHit();
 };

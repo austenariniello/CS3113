@@ -191,6 +191,12 @@ void Entity::AI(Entity *player) {
     }
 }
 
+void Entity::PlayerHit() {
+    position = startPosition;
+    playerLives -= 1;
+    
+}
+
 void Entity::Update(float deltaTime, Entity *player, Entity *objects, int objectCount, Map *map)
 {
     if (isActive == false) return;
@@ -228,39 +234,42 @@ void Entity::Update(float deltaTime, Entity *player, Entity *objects, int object
         velocity.y += jumpPower;
     }
     
-    bool lostLife = false;
-    
     velocity.x = movement.x * speed;
     velocity += acceleration * deltaTime;
     
+    position.x += velocity.x * deltaTime;   // Move on X
     position.y += velocity.y * deltaTime;   // Move on Y
+    
+    CheckCollisionsX(objects, objectCount); // Fix if needed
+    if (entityType == PLAYER) {
+        if (collidedLeft) {
+            if (lastCollided->entityType == ENEMY) {
+                PlayerHit();
+                return;
+            }
+        }
+        else if (collidedRight) {
+            if (lastCollided->entityType == ENEMY) {
+                PlayerHit();
+                return;
+            }
+        }
+    }
+    CheckCollisionsX(map);
+    
+       
     CheckCollisionsY(objects, objectCount); // Fix if needed
     if (entityType == PLAYER) {
         if (collidedBottom) {
             lastCollided->isActive = false;
         }
         else if (collidedTop) {
-            lostLife = true;
+            PlayerHit();
+            return;
         }
     }
     CheckCollisionsY(map);
-    
-    position.x += velocity.x * deltaTime;   // Move on X
-    CheckCollisionsX(objects, objectCount); // Fix if needed
-    if (entityType == PLAYER) {
-        if (collidedLeft) {
-            lostLife = true;
-        }
-        else if (collidedRight) {
-            lostLife = true;
-        }
-    }
-    CheckCollisionsX(map);
-    
-    if (lostLife) {
-        playerLives -= 1;
-    }
-    
+
     modelMatrix = glm::mat4(1.0f);
     modelMatrix = glm::translate(modelMatrix, position);
 }
