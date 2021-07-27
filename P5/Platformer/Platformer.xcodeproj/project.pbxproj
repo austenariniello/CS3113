@@ -13,6 +13,8 @@
 		3F54EDBE26AFAE7500D72A4E /* player.png in CopyFiles */ = {isa = PBXBuildFile; fileRef = 3F54EDBC26AFADF400D72A4E /* player.png */; };
 		3F54EDC526AFB02000D72A4E /* Level3.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3F54EDC326AFB02000D72A4E /* Level3.cpp */; };
 		3F54EDC826AFB11E00D72A4E /* slime.png in CopyFiles */ = {isa = PBXBuildFile; fileRef = 3F54EDC726AFB11900D72A4E /* slime.png */; };
+		3F54EDCD26B04DC300D72A4E /* GameWon.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3F54EDCB26B04DC300D72A4E /* GameWon.cpp */; };
+		3F54EDD126B04DCF00D72A4E /* GameLost.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3F54EDCF26B04DCF00D72A4E /* GameLost.cpp */; };
 		3FAEB81C26A1D1770003752B /* Map.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3FAEB81A26A1D1770003752B /* Map.cpp */; };
 		3FAEB82126A1D93C0003752B /* Util.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3FAEB81F26A1D93C0003752B /* Util.cpp */; };
 		3FAEB82626A1DC680003752B /* Scene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3FAEB82426A1DC680003752B /* Scene.cpp */; };
@@ -55,6 +57,10 @@
 		3F54EDC326AFB02000D72A4E /* Level3.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Level3.cpp; sourceTree = "<group>"; };
 		3F54EDC426AFB02000D72A4E /* Level3.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Level3.h; sourceTree = "<group>"; };
 		3F54EDC726AFB11900D72A4E /* slime.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = slime.png; sourceTree = "<group>"; };
+		3F54EDCB26B04DC300D72A4E /* GameWon.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = GameWon.cpp; sourceTree = "<group>"; };
+		3F54EDCC26B04DC300D72A4E /* GameWon.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GameWon.h; sourceTree = "<group>"; };
+		3F54EDCF26B04DCF00D72A4E /* GameLost.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = GameLost.cpp; sourceTree = "<group>"; };
+		3F54EDD026B04DCF00D72A4E /* GameLost.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GameLost.h; sourceTree = "<group>"; };
 		3FAEB81A26A1D1770003752B /* Map.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Map.cpp; sourceTree = "<group>"; };
 		3FAEB81B26A1D1770003752B /* Map.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Map.h; sourceTree = "<group>"; };
 		3FAEB81F26A1D93C0003752B /* Util.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Util.cpp; sourceTree = "<group>"; };
@@ -143,6 +149,10 @@
 				3FAEB82F26A1DFE20003752B /* Level2.h */,
 				3F54EDC326AFB02000D72A4E /* Level3.cpp */,
 				3F54EDC426AFB02000D72A4E /* Level3.h */,
+				3F54EDCB26B04DC300D72A4E /* GameWon.cpp */,
+				3F54EDCC26B04DC300D72A4E /* GameWon.h */,
+				3F54EDCF26B04DCF00D72A4E /* GameLost.cpp */,
+				3F54EDD026B04DCF00D72A4E /* GameLost.h */,
 			);
 			path = SDLProject;
 			sourceTree = "<group>";
@@ -219,6 +229,8 @@
 				3FAEB82626A1DC680003752B /* Scene.cpp in Sources */,
 				DBDF1B532323DE3F007CECB1 /* main.cpp in Sources */,
 				3FDCE0F12683BC40004AA423 /* Entity.cpp in Sources */,
+				3F54EDCD26B04DC300D72A4E /* GameWon.cpp in Sources */,
+				3F54EDD126B04DCF00D72A4E /* GameLost.cpp in Sources */,
 				3F54EDC526AFB02000D72A4E /* Level3.cpp in Sources */,
 				3FAEB81C26A1D1770003752B /* Map.cpp in Sources */,
 				DBDF1B5E2323DE8D007CECB1 /* ShaderProgram.cpp in Sources */,

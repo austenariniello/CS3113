@@ -7,17 +7,17 @@
 
 unsigned int level2_data[] =
 {
-    3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-    3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-    3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-    3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-    3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-    3, 0, 0, 0, 0, 0, 0, 0, 0, 3, 3, 3, 3, 3,
-    3, 1, 1, 1, 1, 1, 1, 0, 3, 3, 3, 3, 3, 3,
-    3, 2, 2, 2, 2, 2, 2, 0, 3, 3, 3, 3, 3, 3
+    3, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16,
+    3, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16,
+    3, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16,
+    3, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16,
+    3, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16,
+    3, 16, 16, 16, 16, 16, 16, 16, 16, 1, 1, 1, 1, 1,
+    3, 1, 1, 1, 1, 1, 1, 16, 16, 2, 2, 2, 2, 2,
+    3, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2
 };
 
-void Level2::Initialize() {
+void Level2::Initialize(int playerLives) {
     
     state.nextScene = -1;
     
@@ -51,26 +51,39 @@ void Level2::Initialize() {
     
     state.player->jumpPower = 6.0f;
     
+    state.player->playerLives = playerLives;
+    
     state.enemies = new Entity[LEVEL2_ENEMY_COUNT];
     GLuint enemyTextureID = Util::LoadTexture("slime.png");
     
     for (int i = 0; i < LEVEL2_ENEMY_COUNT; i++) {
         state.enemies[i].entityType = ENEMY;
         state.enemies[i].textureID = enemyTextureID;
-        state.enemies[i].position = glm::vec3(4 + i, -2.25f, 0);
+        state.enemies[i].position = glm::vec3(9 + i, -4, 0);
         
         state.enemies[i].aiType = WAITANDGO;
         state.enemies[i].aiState = IDLE;
         state.enemies[i].speed = 1;
-        state.enemies[i].isActive = false;
     }
 }
 
 void Level2::Update(float deltaTime) {
     state.player->Update(deltaTime, state.player, state.enemies, LEVEL2_ENEMY_COUNT, state.map);
+    
+    if (state.player->position.x >= 12) {
+        state.nextScene = 3;
+    }
+    
+    for (int i = 0; i < LEVEL2_ENEMY_COUNT; i++) {
+        state.enemies[i].Update(deltaTime, state.player, state.enemies, LEVEL2_ENEMY_COUNT, state.map);
+    }
 }
 
 void Level2::Render(ShaderProgram *program) {
     state.map->Render(program);
     state.player->Render(program);
+    
+    for (int i = 0; i < LEVEL2_ENEMY_COUNT; i++) {
+        state.enemies[i].Render(program);
+    }
 }

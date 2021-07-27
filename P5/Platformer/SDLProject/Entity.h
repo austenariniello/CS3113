@@ -27,6 +27,8 @@ public:
     AIType aiType;
     AIState aiState;
     
+    int playerLives = NULL;
+    
     glm::vec3 position;
     glm::vec3 movement;
     glm::vec3 acceleration;

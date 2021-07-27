@@ -1,6 +1,6 @@
 #include "Scene.h"
 
-class Menu : public Scene {
+class GameWon : public Scene {
 
 public:
     void Initialize(int playerLives) override;

@@ -19,6 +19,9 @@
 #include "Menu.h"
 #include "Level1.h"
 #include "Level2.h"
+#include "Level3.h"
+#include "GameWon.h"
+#include "GameLost.h"
 
 SDL_Window* displayWindow;
 bool gameIsRunning = true;
@@ -27,11 +30,13 @@ ShaderProgram program;
 glm::mat4 viewMatrix, modelMatrix, projectionMatrix;
 
 Scene *currentScene;
-Scene *sceneList[3];
+Scene *sceneList[6];
+
+int gameLives = 3;
 
 void SwitchToScene(Scene *scene) {
     currentScene = scene;
-    currentScene->Initialize();
+    currentScene->Initialize(gameLives);
 }
 
 void Initialize() {
@@ -65,6 +70,9 @@ void Initialize() {
     sceneList[0] = new Menu();
     sceneList[1] = new Level1();
     sceneList[2] = new Level2();
+    sceneList[3] = new Level3();
+    sceneList[4] = new GameWon();
+    sceneList[5] = new GameLost();
     SwitchToScene(sceneList[0]);
     
 }
@@ -150,7 +158,7 @@ void Update() {
     
     viewMatrix = glm::mat4(1.0f);
     
-    if (currentScene == sceneList[0]) {
+    if ((currentScene == sceneList[0]) || (currentScene == sceneList[4]) || (currentScene == sceneList[5])) {
         viewMatrix = glm::translate(viewMatrix, glm::vec3(-4.5f, 3.75f, 0));
     }
     else if (currentScene->state.player->position.x > 5) {
@@ -184,7 +192,16 @@ int main(int argc, char* argv[]) {
         ProcessInput();
         Update();
         
-        if (currentScene->state.nextScene >= 0) SwitchToScene(sceneList[currentScene->state.nextScene]);
+        if (currentScene->state.player->isActive) {
+            if (currentScene->state.player->playerLives <= 0) {
+                SwitchToScene(sceneList[5]);
+            }
+        }
+        
+        if (currentScene->state.nextScene >= 0) {
+            gameLives = currentScene->state.player->playerLives;
+            SwitchToScene(sceneList[currentScene->state.nextScene]);
+        }
         
         Render();
     }

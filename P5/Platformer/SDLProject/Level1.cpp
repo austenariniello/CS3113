@@ -17,7 +17,7 @@ unsigned int level1_data[] =
     3, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2
 };
 
-void Level1::Initialize() {
+void Level1::Initialize(int playerLives) {
     
     state.nextScene = -1;
     
@@ -51,6 +51,8 @@ void Level1::Initialize() {
     
     state.player->jumpPower = 6.0f;
     
+    state.player->playerLives = playerLives;
+    
     state.enemies = new Entity[LEVEL1_ENEMY_COUNT];
     GLuint enemyTextureID = Util::LoadTexture("slime.png");
     
@@ -70,7 +72,7 @@ void Level1::Update(float deltaTime) {
     state.player->Update(deltaTime, state.player, state.enemies, LEVEL1_ENEMY_COUNT, state.map);
     
     if (state.player->position.x >= 12) {
-        state.nextScene = 1;
+        state.nextScene = 2;
     }
     
     for (int i = 0; i < LEVEL1_ENEMY_COUNT; i++) {
