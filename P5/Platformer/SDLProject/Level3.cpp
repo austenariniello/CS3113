@@ -60,6 +60,7 @@ void Level3::Initialize(int playerLives) {
         state.enemies[i].entityType = ENEMY;
         state.enemies[i].textureID = enemyTextureID;
         state.enemies[i].position = glm::vec3(9 + i, -4, 0);
+        state.enemies[i].acceleration = glm::vec3(0, -9.81f, 0);
         
         state.enemies[i].aiType = WAITANDGO;
         state.enemies[i].aiState = IDLE;

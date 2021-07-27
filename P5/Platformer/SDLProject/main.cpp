@@ -29,6 +29,10 @@ bool gameIsRunning = true;
 ShaderProgram program;
 glm::mat4 viewMatrix, modelMatrix, projectionMatrix;
 
+// UI
+glm::mat4 uiViewMatrix, uiProjectionMatrix;
+GLuint fontTextureID;
+
 Scene *currentScene;
 Scene *sceneList[6];
 
@@ -74,6 +78,11 @@ void Initialize() {
     sceneList[4] = new GameWon();
     sceneList[5] = new GameLost();
     SwitchToScene(sceneList[0]);
+    
+    uiViewMatrix = glm::mat4(1.0);
+    uiProjectionMatrix = glm::ortho(-5.0f, 5.0f, -3.75f, 3.75f, -1.0f, 1.0f);
+    
+    fontTextureID = Util::LoadTexture("font1.png");
     
 }
 
@@ -173,9 +182,19 @@ void Update() {
 void Render() {
     glClear(GL_COLOR_BUFFER_BIT);
     
+    program.SetProjectionMatrix(projectionMatrix);
     program.SetViewMatrix(viewMatrix);
     
     currentScene->Render(&program);
+    
+    program.SetProjectionMatrix(uiProjectionMatrix);
+    program.SetViewMatrix(uiViewMatrix);
+    
+    std::string livesString = "Lives: " + std::to_string(currentScene->state.player->playerLives);
+    
+    if ((currentScene == sceneList[1]) || (currentScene == sceneList[2]) || (currentScene == sceneList[3])) {
+        Util::DrawText(&program, fontTextureID, livesString, 0.5f, -0.3f, glm::vec3(-4.8f, 3.25f, 0));
+    }
     
     SDL_GL_SwapWindow(displayWindow);
 }
