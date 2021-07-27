@@ -57,7 +57,7 @@ void Initialize() {
     
     glUseProgram(program.programID);
     
-    glClearColor(0.2f, 0.2f, 0.2f, 1.0f);
+    glClearColor(0.506f, 0.678f, 0.784f, 1.0f);
     glEnable(GL_BLEND);
 
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);

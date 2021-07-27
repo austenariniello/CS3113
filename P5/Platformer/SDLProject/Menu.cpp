@@ -6,14 +6,14 @@
 
 unsigned int menu_data[] =
 {
-    3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3,
-    3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3,
-    3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3,
-    3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3,
-    3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3,
-    3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3,
-    3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3,
-    3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3
+    13, 13, 13, 13, 13, 13, 13, 13, 13, 13,
+    13, 13, 13, 13, 13, 13, 13, 13, 13, 13,
+    13, 13, 13, 13, 13, 13, 13, 13, 13, 13,
+    13, 13, 13, 13, 13, 13, 13, 13, 13, 13,
+    13, 13, 13, 13, 13, 13, 13, 13, 13, 13,
+    13, 13, 13, 13, 13, 13, 13, 13, 13, 13,
+    13, 13, 13, 13, 13, 13, 13, 13, 13, 13,
+    13, 13, 13, 13, 13, 13, 13, 13, 13, 13
 };
 
 void Menu::Initialize() {
@@ -21,7 +21,7 @@ void Menu::Initialize() {
     state.nextScene = -1;
     
     GLuint mapTextureID = Util::LoadTexture("tileset.png");
-    state.map = new Map(MENU_WIDTH, MENU_HEIGHT, menu_data, mapTextureID, 1.0f, 4, 1);
+    state.map = new Map(MENU_WIDTH, MENU_HEIGHT, menu_data, mapTextureID, 1.0f, 12, 6);
     
     state.player = new Entity();
     state.player->isActive = false;

@@ -1,11 +1,11 @@
-#include "Level2.h"
+#include "Level3.h"
 
-#define LEVEL2_WIDTH 14
-#define LEVEL2_HEIGHT 8
+#define LEVEL3_WIDTH 14
+#define LEVEL3_HEIGHT 8
 
-#define LEVEL2_ENEMY_COUNT 1
+#define LEVEL3_ENEMY_COUNT 1
 
-unsigned int level2_data[] =
+unsigned int level3_data[] =
 {
     3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
     3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
@@ -17,12 +17,12 @@ unsigned int level2_data[] =
     3, 2, 2, 2, 2, 2, 2, 0, 3, 3, 3, 3, 3, 3
 };
 
-void Level2::Initialize() {
+void Level3::Initialize() {
     
     state.nextScene = -1;
     
     GLuint mapTextureID = Util::LoadTexture("tileset.png");
-    state.map = new Map(LEVEL2_WIDTH, LEVEL2_HEIGHT, level2_data, mapTextureID, 1.0f, 12, 6);
+    state.map = new Map(LEVEL3_WIDTH, LEVEL3_HEIGHT, level3_data, mapTextureID, 1.0f, 12, 6);
     // Move over all of the player and enemy code from initialization.
     
     // Initialize Game Objects
@@ -46,15 +46,15 @@ void Level2::Initialize() {
     state.player->animCols = 6;
     state.player->animRows = 2;
     
-    state.player->height = 0.8;
+    state.player->height = 1;
     state.player->width = 0.8;
     
     state.player->jumpPower = 6.0f;
     
-    state.enemies = new Entity[LEVEL2_ENEMY_COUNT];
+    state.enemies = new Entity[LEVEL3_ENEMY_COUNT];
     GLuint enemyTextureID = Util::LoadTexture("slime.png");
     
-    for (int i = 0; i < LEVEL2_ENEMY_COUNT; i++) {
+    for (int i = 0; i < LEVEL3_ENEMY_COUNT; i++) {
         state.enemies[i].entityType = ENEMY;
         state.enemies[i].textureID = enemyTextureID;
         state.enemies[i].position = glm::vec3(4 + i, -2.25f, 0);
@@ -66,11 +66,11 @@ void Level2::Initialize() {
     }
 }
 
-void Level2::Update(float deltaTime) {
-    state.player->Update(deltaTime, state.player, state.enemies, LEVEL2_ENEMY_COUNT, state.map);
+void Level3::Update(float deltaTime) {
+    state.player->Update(deltaTime, state.player, state.enemies, LEVEL3_ENEMY_COUNT, state.map);
 }
 
-void Level2::Render(ShaderProgram *program) {
+void Level3::Render(ShaderProgram *program) {
     state.map->Render(program);
     state.player->Render(program);
 }
