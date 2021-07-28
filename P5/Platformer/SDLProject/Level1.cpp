@@ -54,6 +54,8 @@ void Level1::Initialize(int playerLives) {
     
     state.player->playerLives = playerLives;
     
+    
+    
     state.enemies = new Entity[LEVEL1_ENEMY_COUNT];
     GLuint enemyTextureID = Util::LoadTexture("slime.png");
     

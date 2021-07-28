@@ -36,4 +36,5 @@ void GameLost::Render(ShaderProgram *program) {
     
     GLuint fontTextureID = Util::LoadTexture("font1.png");
     Util::DrawText(program, fontTextureID, "Game Lost", 0.5f, -0.25f, glm::vec3(3.25f, -3.75f, 0));
+    Util::DrawText(program, fontTextureID, "Press Enter To Restart", 0.5f, -0.25f, glm::vec3(1.75f, -4.75f, 0));
 }

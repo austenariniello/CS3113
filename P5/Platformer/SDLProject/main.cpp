@@ -127,7 +127,9 @@ void ProcessInput() {
                             Mix_PlayChannel(-1, jump, 0);
                         }
                     case SDLK_RETURN:
-                        if (currentScene == sceneList[0]) {
+                        if ((currentScene == sceneList[0]) || (currentScene == sceneList[4]) || (currentScene == sceneList[5])) {
+                            gameLives = 3;
+                            currentScene->state.player->playerLives = gameLives;
                             currentScene->state.nextScene = 1;
                         }
                         break;
@@ -146,7 +148,6 @@ void ProcessInput() {
         currentScene->state.player->movement.x = 1.0f;
         currentScene->state.player->animIndices = currentScene->state.player->animRight;
     }
-    
 
     if (glm::length(currentScene->state.player->movement) > 1.0f) {
         currentScene->state.player->movement = glm::normalize(currentScene->state.player->movement);
