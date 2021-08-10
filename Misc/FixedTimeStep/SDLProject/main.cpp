@@ -12,6 +12,7 @@
 #include "ShaderProgram.h"
 
 #include "Util.h"
+#include "Effects.h"
 #include "Entity.h"
 #include "Map.h"
 
@@ -27,6 +28,8 @@ glm::mat4 viewMatrix, modelMatrix, projectionMatrix;
 
 Scene *currentScene;
 Scene *sceneList[2];
+
+Effects *effects;
 
 void SwitchToScene(Scene *scene) {
     currentScene = scene;
@@ -45,7 +48,7 @@ void Initialize() {
     
     glViewport(0, 0, 1280, 960);
     
-    program.Load("shaders/vertex_textured.glsl", "shaders/fragment_textured.glsl");
+    program.Load("shaders/vertex_lit.glsl", "shaders/fragment_lit.glsl");
     
     viewMatrix = glm::mat4(1.0f);
     modelMatrix = glm::mat4(1.0f);
@@ -65,6 +68,9 @@ void Initialize() {
     sceneList[1] = new Level2();
     SwitchToScene(sceneList[0]);
     
+    effects = new Effects(projectionMatrix, viewMatrix);
+    
+    //effects->Start(FADEIN, 0.3f);
 }
 
 void ProcessInput() {
@@ -114,6 +120,8 @@ void ProcessInput() {
     if (glm::length(currentScene->state.player->movement) > 1.0f) {
         currentScene->state.player->movement = glm::normalize(currentScene->state.player->movement);
     }
+    
+    
 
 }
 
@@ -121,6 +129,8 @@ void ProcessInput() {
 
 float lastTicks = 0;
 float accumulator = 0.0f;
+
+bool lastCollidedBottom = false;
 
 void Update() {
     float ticks = (float)SDL_GetTicks() / 1000.0f;
@@ -137,6 +147,16 @@ void Update() {
         // Update. Notice it's FIXED_TIMESTEP. Not deltaTime
         currentScene->Update(FIXED_TIMESTEP);
         
+        program.SetLightPosition(currentScene->state.player->position);
+        
+        if(not lastCollidedBottom && currentScene->state.player->collidedBottom) {
+            //effects->Start(SHAKE, 2.0f);
+        }
+        
+        lastCollidedBottom = currentScene->state.player->collidedBottom;
+        
+        effects->Update(FIXED_TIMESTEP);
+        
         deltaTime -= FIXED_TIMESTEP;
     }
 
@@ -149,6 +169,8 @@ void Update() {
         viewMatrix = glm::translate(viewMatrix, glm::vec3(-5, 3.75, 0));
     }
     
+    viewMatrix = glm::translate(viewMatrix, effects->viewOffset);
+    
 }
 
 
@@ -157,7 +179,10 @@ void Render() {
     
     program.SetViewMatrix(viewMatrix);
     
+    glUseProgram(program.programID);
     currentScene->Render(&program);
+    
+    effects->Render();
     
     SDL_GL_SwapWindow(displayWindow);
 }

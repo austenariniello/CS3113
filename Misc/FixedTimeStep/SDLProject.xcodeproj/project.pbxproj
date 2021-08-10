@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3F2BAE2826B88A1C0022A7BF /* Effects.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3F2BAE2626B88A1C0022A7BF /* Effects.cpp */; };
 		3FAEB81826A1D10D0003752B /* tileset.png in CopyFiles */ = {isa = PBXBuildFile; fileRef = 3FAEB81726A1D0FF0003752B /* tileset.png */; };
 		3FAEB81C26A1D1770003752B /* Map.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3FAEB81A26A1D1770003752B /* Map.cpp */; };
 		3FAEB82126A1D93C0003752B /* Util.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3FAEB81F26A1D93C0003752B /* Util.cpp */; };
@@ -45,6 +46,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		3F2BAE2626B88A1C0022A7BF /* Effects.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Effects.cpp; sourceTree = "<group>"; };
+		3F2BAE2726B88A1C0022A7BF /* Effects.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Effects.h; sourceTree = "<group>"; };
 		3FAEB81726A1D0FF0003752B /* tileset.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tileset.png; sourceTree = "<group>"; };
 		3FAEB81A26A1D1770003752B /* Map.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Map.cpp; sourceTree = "<group>"; };
 		3FAEB81B26A1D1770003752B /* Map.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Map.h; sourceTree = "<group>"; };
@@ -133,6 +136,8 @@
 				3FAEB82A26A1DD5C0003752B /* Level1.h */,
 				3FAEB82E26A1DFE20003752B /* Level2.cpp */,
 				3FAEB82F26A1DFE20003752B /* Level2.h */,
+				3F2BAE2626B88A1C0022A7BF /* Effects.cpp */,
+				3F2BAE2726B88A1C0022A7BF /* Effects.h */,
 			);
 			path = SDLProject;
 			sourceTree = "<group>";
@@ -212,6 +217,7 @@
 				DBDF1B5E2323DE8D007CECB1 /* ShaderProgram.cpp in Sources */,
 				3FAEB83026A1DFE20003752B /* Level2.cpp in Sources */,
 				3FAEB82126A1D93C0003752B /* Util.cpp in Sources */,
+				3F2BAE2826B88A1C0022A7BF /* Effects.cpp in Sources */,
 				3FAEB82B26A1DD5C0003752B /* Level1.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
