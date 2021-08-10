@@ -23,6 +23,7 @@ public:
     
     EntityType entityType;
     Entity *lastCollided;
+    bool mapCollision = false;
     
     AIType aiType;
     AIState aiState;

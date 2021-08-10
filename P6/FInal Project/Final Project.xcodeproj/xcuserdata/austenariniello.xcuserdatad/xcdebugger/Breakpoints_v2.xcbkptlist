@@ -30,8 +30,8 @@
             filePath = "SDLProject/Entity.cpp"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "264"
-            endingLineNumber = "264"
+            startingLineNumber = "274"
+            endingLineNumber = "274"
             landmarkName = "Entity::Update(deltaTime, player, enemies, enemyCount, projectiles, projectileCount, map)"
             landmarkType = "7">
          </BreakpointContent>
@@ -46,8 +46,8 @@
             filePath = "SDLProject/Entity.cpp"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "257"
-            endingLineNumber = "257"
+            startingLineNumber = "266"
+            endingLineNumber = "266"
             landmarkName = "Entity::Update(deltaTime, player, enemies, enemyCount, projectiles, projectileCount, map)"
             landmarkType = "7">
          </BreakpointContent>

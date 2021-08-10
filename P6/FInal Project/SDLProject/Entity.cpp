@@ -98,36 +98,42 @@ void Entity::CheckCollisionsY(Map *map)
     if (map->IsSolid(top, &penetration_x, &penetration_y) && velocity.y > 0) {
         position.y -= penetration_y;
         velocity.y = 0;
+        mapCollision = true;
         collidedTop = true;
     }
     
     else if (map->IsSolid(top_left, &penetration_x, &penetration_y) && velocity.y > 0) {
         position.y -= penetration_y;
         velocity.y = 0;
+        mapCollision = true;
         collidedTop = true;
     }
     
     else if (map->IsSolid(top_right, &penetration_x, &penetration_y) && velocity.y > 0) {
         position.y -= penetration_y;
         velocity.y = 0;
+        mapCollision = true;
         collidedTop = true;
     }
     
     if (map->IsSolid(bottom, &penetration_x, &penetration_y) && velocity.y < 0) {
         position.y += penetration_y;
         velocity.y = 0;
+        mapCollision = true;
         collidedBottom = true;
     }
     
     else if (map->IsSolid(bottom_left, &penetration_x, &penetration_y) && velocity.y < 0) {
         position.y += penetration_y;
         velocity.y = 0;
+        mapCollision = true;
         collidedBottom = true;
     }
     
     else if (map->IsSolid(bottom_right, &penetration_x, &penetration_y) && velocity.y < 0) {
         position.y += penetration_y;
         velocity.y = 0;
+        mapCollision = true;
         collidedBottom = true;
     }
 }
@@ -144,12 +150,14 @@ void Entity::CheckCollisionsX(Map *map)
     if (map->IsSolid(left, &penetration_x, &penetration_y) && velocity.x < 0) {
         position.x += penetration_x;
         velocity.x = 0;
+        mapCollision = true;
         collidedLeft = true;
     }
 
     if (map->IsSolid(right, &penetration_x, &penetration_y) && velocity.x > 0) {
         position.x -= penetration_x;
         velocity.x = 0;
+        mapCollision = true;
         collidedRight = true;
     }
 }
@@ -224,6 +232,7 @@ void Entity::Update(float deltaTime, Entity *player, Entity *enemies, int enemyC
     collidedBottom = false;
     collidedLeft = false;
     collidedRight = false;
+    mapCollision = false;
     
     if (entityType == ENEMY) {
         AI(player);
@@ -261,6 +270,7 @@ void Entity::Update(float deltaTime, Entity *player, Entity *enemies, int enemyC
         
         projectiles[freeProjectile].position = position;
         projectiles[freeProjectile].position.y += 1;
+        projectiles[freeProjectile].lastCollided = NULL;
         projectiles[freeProjectile].isActive = true;
         
         projectiles[freeProjectile].velocity.y = 7;
@@ -286,14 +296,15 @@ void Entity::Update(float deltaTime, Entity *player, Entity *enemies, int enemyC
         }
     }
     
-    else if (entityType ==  ENEMY) {
+    if (entityType == PROJECTILE) {
         if ((collidedTop) || (collidedBottom) || (collidedLeft) || (collidedRight)) {
+            if (not mapCollision) {
+                lastCollided->isActive = false;
+            }
             isActive = false;
         }
-    }
-    
-    else if (entityType ==  PROJECTILE) {
-        if ((collidedTop) || (collidedBottom) || (collidedLeft) || (collidedRight)) {
+        
+        if ((position.y - player->position.y) >= 7.5) {
             isActive = false;
         }
     }
