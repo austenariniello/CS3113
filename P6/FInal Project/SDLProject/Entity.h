@@ -73,7 +73,7 @@ public:
     void CheckCollisionsX(Map *map);
     void CheckCollisionsY(Map *map);
     
-    void Update(float deltaTime, Entity *player, Entity *objects, int objectCount, Map *map);
+    void Update(float deltaTime, Entity *player, Entity *enemies, int enemyCount, Entity *projectiles, int projectileCount, Map *map);
     void Render(ShaderProgram *program);
     void DrawSpriteFromTextureAtlas(ShaderProgram *program, GLuint textureID, int index);
     

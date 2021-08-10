@@ -5,6 +5,8 @@
 
 #define LEVEL1_ENEMY_COUNT 11
 
+#define LEVEL1_PROJECTILE_COUNT 20
+
 unsigned int level1_data[] =
 {
     50, 50, 50, 50, 50, 50, 50, 50, 50, 50,
@@ -73,8 +75,8 @@ void Level1::Initialize(int playerLives) {
     // Initialize Player
     state.player = new Entity();
     state.player->entityType = PLAYER;
-    state.player->position = glm::vec3(5, -47, 0);
-    state.player->startPosition = glm::vec3(5, -47, 0);
+    state.player->position = glm::vec3(4.5f, -47, 0);
+    state.player->startPosition = glm::vec3(4.5f, -47, 0);
     state.player->velocity = glm::vec3(0, 1, 0);
     state.player->movement = glm::vec3(0);
     state.player->acceleration = glm::vec3(0);
@@ -125,19 +127,35 @@ void Level1::Initialize(int playerLives) {
     state.enemies[9].aiState = IDLE;
     
     state.enemies[10].position = glm::vec3(4.5f, -7, 0);
+    
+    state.projectiles = new Entity[LEVEL1_PROJECTILE_COUNT];
+    GLuint projectileTextureID = Util::LoadTexture("tile_0015.png");
+    
+    for (int i = 0; i < LEVEL1_PROJECTILE_COUNT; i++) {
+        state.projectiles[i].entityType = PROJECTILE;
+        state.projectiles[i].textureID = projectileTextureID;
+        state.projectiles[i].velocity = glm::vec3(0, 7, 0);
+        
+        state.projectiles[i].speed = 1.0f;
+        state.projectiles[i].isActive = false;
+    }
+    
 }
 
 void Level1::Update(float deltaTime) {
-    state.player->Update(deltaTime, state.player, state.enemies, LEVEL1_ENEMY_COUNT, state.map);
+    state.player->Update(deltaTime, state.player, state.enemies, LEVEL1_ENEMY_COUNT, state.projectiles, LEVEL1_PROJECTILE_COUNT, state.map);
     
     if ((state.player->position.y >= -6)) {
         state.nextScene = 2;
     }
     
     for (int i = 0; i < LEVEL1_ENEMY_COUNT; i++) {
-        state.enemies[i].Update(deltaTime, state.player, state.enemies, LEVEL1_ENEMY_COUNT, state.map);
+        state.enemies[i].Update(deltaTime, state.player, state.enemies, LEVEL1_ENEMY_COUNT, state.projectiles, LEVEL1_PROJECTILE_COUNT, state.map);
         
-        
+    }
+    
+    for (int i = 0; i < LEVEL1_PROJECTILE_COUNT; i++) {
+        state.projectiles[i].Update(deltaTime, state.player, state.enemies, LEVEL1_ENEMY_COUNT, state.projectiles, LEVEL1_PROJECTILE_COUNT, state.map);
     }
 }
 
@@ -147,5 +165,9 @@ void Level1::Render(ShaderProgram *program) {
     
     for (int i = 0; i < LEVEL1_ENEMY_COUNT; i++) {
         state.enemies[i].Render(program);
+    }
+    
+    for (int i = 0; i < LEVEL1_PROJECTILE_COUNT; i++) {
+        state.projectiles[i].Render(program);
     }
 }

@@ -15,6 +15,10 @@ bool Entity::CheckCollision(Entity *other) {
     
     if (other == this) return false;
     
+    if ((this->entityType == PLAYER) && (other->entityType == PROJECTILE)) return false;
+    
+    if ((this->entityType == PROJECTILE) && (other->entityType == PLAYER)) return false;
+    
     if (isActive == false || other->isActive == false) return false;
     
     float xdist = fabs(position.x - other->position.x) - ((width + other->width) / 2.0f);
@@ -207,11 +211,12 @@ void Entity::AI(Entity *player) {
 
 void Entity::PlayerHit() {
     position = startPosition;
+    velocity = glm::vec3(0, 1, 0);
     playerLives -= 1;
     
 }
 
-void Entity::Update(float deltaTime, Entity *player, Entity *objects, int objectCount, Map *map)
+void Entity::Update(float deltaTime, Entity *player, Entity *enemies, int enemyCount, Entity *projectiles, int projectileCount, Map *map)
 {
     if (isActive == false) return;
     
@@ -245,7 +250,20 @@ void Entity::Update(float deltaTime, Entity *player, Entity *objects, int object
     if (shoot) {
         shoot = false;
         
+        int freeProjectile = 0;
         
+        for (int i = 0; i < projectileCount; i++) {
+            if (not projectiles[i].isActive) {
+                freeProjectile = i;
+                break;
+            }
+        }
+        
+        projectiles[freeProjectile].position = position;
+        projectiles[freeProjectile].position.y += 1;
+        projectiles[freeProjectile].isActive = true;
+        
+        projectiles[freeProjectile].velocity.y = 7;
     }
     
     velocity.x = movement.x * speed;
@@ -254,15 +272,29 @@ void Entity::Update(float deltaTime, Entity *player, Entity *objects, int object
     position.x += velocity.x * deltaTime;   // Move on X
     position.y += velocity.y * deltaTime;   // Move on Y
     
-    CheckCollisionsX(objects, objectCount); // Fix if needed
+    CheckCollisionsX(enemies, enemyCount); // Fix if needed
+    CheckCollisionsX(projectiles, projectileCount);
     CheckCollisionsX(map);
        
-    CheckCollisionsY(objects, objectCount); // Fix if needed
+    CheckCollisionsY(enemies, enemyCount); // Fix if needed
+    CheckCollisionsY(projectiles, projectileCount);
     CheckCollisionsY(map);
     
     if (entityType ==  PLAYER) {
         if ((collidedTop) || (collidedBottom) || (collidedLeft) || (collidedRight)) {
             PlayerHit();
+        }
+    }
+    
+    else if (entityType ==  ENEMY) {
+        if ((collidedTop) || (collidedBottom) || (collidedLeft) || (collidedRight)) {
+            isActive = false;
+        }
+    }
+    
+    else if (entityType ==  PROJECTILE) {
+        if ((collidedTop) || (collidedBottom) || (collidedLeft) || (collidedRight)) {
+            isActive = false;
         }
     }
 

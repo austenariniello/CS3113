@@ -122,10 +122,8 @@ void ProcessInput() {
                         break;
                         
                     case SDLK_SPACE:
-                        if (currentScene->state.player->collidedBottom) {
-                            currentScene->state.player->shoot = true;
-                            Mix_PlayChannel(-1, jump, 0);
-                        }
+                        currentScene->state.player->shoot = true;
+                        Mix_PlayChannel(-1, jump, 0);
                     case SDLK_RETURN:
                         if ((currentScene == sceneList[0]) || (currentScene == sceneList[4]) || (currentScene == sceneList[5])) {
                             gameLives = 3;

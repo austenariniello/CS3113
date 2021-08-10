@@ -5,6 +5,8 @@
 
 #define LEVEL3_ENEMY_COUNT 1
 
+#define LEVEL3_PROJECTILE_COUNT 20
+
 unsigned int level3_data[] =
 {
     38, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16,
@@ -67,10 +69,22 @@ void Level3::Initialize(int playerLives) {
     }
     
     state.enemies[0].position = glm::vec3(12, -3, 0);
+    
+    state.projectiles = new Entity[LEVEL3_PROJECTILE_COUNT];
+    GLuint projectileTextureID = Util::LoadTexture("tile_0015.png");
+    
+    for (int i = 0; i < LEVEL3_PROJECTILE_COUNT; i++) {
+        state.projectiles[i].entityType = PROJECTILE;
+        state.projectiles[i].textureID = projectileTextureID;
+        state.projectiles[i].velocity = glm::vec3(0, 1, 0);
+        
+        state.projectiles[i].speed = 7.0f;
+        state.projectiles[i].isActive = false;
+    }
 }
 
 void Level3::Update(float deltaTime) {
-    state.player->Update(deltaTime, state.player, state.enemies, LEVEL3_ENEMY_COUNT, state.map);
+    state.player->Update(deltaTime, state.player, state.enemies, LEVEL3_ENEMY_COUNT, state.projectiles, LEVEL3_PROJECTILE_COUNT, state.map);
     
     if (state.player->position.y <= -10) {
         state.player->PlayerHit();
@@ -80,11 +94,15 @@ void Level3::Update(float deltaTime) {
     }
     
     for (int i = 0; i < LEVEL3_ENEMY_COUNT; i++) {
-        state.enemies[i].Update(deltaTime, state.player, state.enemies, LEVEL3_ENEMY_COUNT, state.map);
+        state.enemies[i].Update(deltaTime, state.player, state.enemies, LEVEL3_ENEMY_COUNT, state.projectiles, LEVEL3_PROJECTILE_COUNT, state.map);
         
         if (state.enemies[i].position.y <= -10) {
             state.enemies[i].isActive = false;
         }
+    }
+    
+    for (int i = 0; i < LEVEL3_PROJECTILE_COUNT; i++) {
+        state.projectiles[i].Update(deltaTime, state.player, state.enemies, LEVEL3_ENEMY_COUNT, state.projectiles, LEVEL3_PROJECTILE_COUNT, state.map);
     }
 }
 
@@ -94,5 +112,9 @@ void Level3::Render(ShaderProgram *program) {
     
     for (int i = 0; i < LEVEL3_ENEMY_COUNT; i++) {
         state.enemies[i].Render(program);
+    }
+    
+    for (int i = 0; i < LEVEL3_PROJECTILE_COUNT; i++) {
+        state.projectiles[i].Render(program);
     }
 }
