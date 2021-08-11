@@ -41,7 +41,7 @@ Scene *sceneList[6];
 int gameLives = 3;
 
 Mix_Music *music;
-Mix_Chunk *jump;
+Mix_Chunk *shoot;
 
 void SwitchToScene(Scene *scene) {
     currentScene = scene;
@@ -63,12 +63,12 @@ void Initialize() {
     program.Load("shaders/vertex_textured.glsl", "shaders/fragment_textured.glsl");
     
     Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 4096);
-    music = Mix_LoadMUS("relaxed_village.mp3");
+    music = Mix_LoadMUS("Battle in the Stratosphereq.mp3");
     Mix_PlayMusic(music, -1);
     Mix_VolumeMusic(MIX_MAX_VOLUME / 4);
     
-    jump = Mix_LoadWAV("SFX_Jump_07.wav");
-    Mix_VolumeChunk(jump, MIX_MAX_VOLUME / 2);
+    shoot = Mix_LoadWAV("shoot.wav");
+    Mix_VolumeChunk(shoot, MIX_MAX_VOLUME / 2);
     
     viewMatrix = glm::mat4(1.0f);
     modelMatrix = glm::mat4(1.0f);
@@ -90,7 +90,7 @@ void Initialize() {
     sceneList[3] = new Level3();
     sceneList[4] = new GameWon();
     sceneList[5] = new GameLost();
-    SwitchToScene(sceneList[3]);
+    SwitchToScene(sceneList[0]);
     
     uiViewMatrix = glm::mat4(1.0);
     uiProjectionMatrix = glm::ortho(-5.0f, 5.0f, -3.75f, 3.75f, -1.0f, 1.0f);
@@ -122,8 +122,11 @@ void ProcessInput() {
                         break;
                         
                     case SDLK_SPACE:
-                        currentScene->state.player->shoot = true;
-                        Mix_PlayChannel(-1, jump, 0);
+                        if ((currentScene == sceneList[1]) || (currentScene == sceneList[2]) || (currentScene == sceneList[3])) {
+                            currentScene->state.player->shoot = true;
+                            Mix_PlayChannel(-1, shoot, 0);
+                        }
+                        break;
                     case SDLK_RETURN:
                         if ((currentScene == sceneList[0]) || (currentScene == sceneList[4]) || (currentScene == sceneList[5])) {
                             gameLives = 3;
@@ -218,7 +221,7 @@ void Render() {
 
 
 void Shutdown() {
-    Mix_FreeChunk(jump);
+    Mix_FreeChunk(shoot);
     Mix_FreeMusic(music);
     
     SDL_Quit();
