@@ -90,7 +90,7 @@ void Initialize() {
     sceneList[3] = new Level3();
     sceneList[4] = new GameWon();
     sceneList[5] = new GameLost();
-    SwitchToScene(sceneList[0]);
+    SwitchToScene(sceneList[3]);
     
     uiViewMatrix = glm::mat4(1.0);
     uiProjectionMatrix = glm::ortho(-5.0f, 5.0f, -3.75f, 3.75f, -1.0f, 1.0f);
